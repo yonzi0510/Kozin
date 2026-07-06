@@ -40,3 +40,5 @@ tools/validate-picture.js           # 도안 계약 검증: node tools/validate-
 
 Settings → Pages → "Deploy from a branch" → 기본 브랜치 · `/ (root)` 선택 후 저장하면
 `https://yonzi0510.github.io/kozin/` 에서 바로 사용할 수 있습니다.
+
+<!-- Pages 재배포 트리거 -->
