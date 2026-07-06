@@ -23,7 +23,6 @@
     paper: 'A4',
     orient: 'auto',        // auto | portrait | landscape
     nameDate: true,
-    pencil12: true,        // 색연필 12색 모드 (비슷한 색은 합치고 흰색 칸은 비움)
     bgFill: false          // 배경도 색칠 (빈 칸을 여러 색 번호로 채움 — 활동지 스타일)
   };
 
@@ -99,9 +98,8 @@
   }
 
   // 시트에 그릴 데이터: 범례 항목 + 칸별 번호(배경 채움 시) + 빈 칸 여부
+  // 항상 색연필 12색 기준 (비슷한 색은 합치고, 흰색에 가까운 칸은 비움)
   function sheetData(pic) {
-    if (!state.pencil12)
-      return { legend: pic.palette.map(hex => ({ hex, name: null })), map: null, cellNums: null, hasBlank: false };
     const { map, legend } = mapPalette(pic);
     let hasBlank = map.some(n => n === 0);
     let cellNums = null;
@@ -191,7 +189,7 @@
   function fixedHeights(pic, innerW) {
     const headH = 11;                                    // 제목/이름·날짜 줄
     const hintH = 8;                                     // 안내 문구
-    const itemW = state.pencil12 ? 43 : 24;              // 범례 1개(간격 포함) — 12색은 색 이름 포함
+    const itemW = 43;                                    // 범례 1개(간격 포함, 색연필 이름 표시)
     const perRow = Math.max(1, Math.floor((innerW + 5) / itemW));
     const rows = Math.ceil(legendCount(pic) / perRow);
     const legendH = rows * 10 + (rows - 1) * 2.5 + 3;
@@ -217,7 +215,7 @@
   }
 
   /* ─────────── 숫자 격자 SVG ─────────── */
-  // map: 팔레트 인덱스 → 표시 번호 (null이면 원본 색: 인덱스 + 1, 0이면 숫자 없음)
+  // map: 팔레트 인덱스 → 표시 번호 (0이면 숫자 없음)
   // cellNums: 칸별 번호 배열 (배경 채움 모드 — map보다 우선)
   function buildGridSvg(pic, cellMm, map, cellNums) {
     const { W, H, target } = parsePic(pic);
@@ -231,7 +229,7 @@
     bg.setAttribute('fill', '#fff');
     svg.appendChild(bg);
 
-    // 칸 숫자 (원본 색: 팔레트 인덱스 + 1 — 앱과 동일 / 12색: 매핑 번호, 0은 빈 칸)
+    // 칸 숫자 (색연필 매핑 번호, 0은 빈 칸)
     for (let y = 0; y < H; y++) {
       for (let x = 0; x < W; x++) {
         const i = y * W + x;
@@ -322,7 +320,7 @@
       item.className = 'legend-item';
       item.innerHTML = '<span class="legend-num">' + (i + 1) + '</span>' +
         '<span class="legend-swatch" style="background:' + en.hex + '"></span>' +
-        (en.name ? '<span class="legend-name">' + en.name + '</span>' : '');
+        '<span class="legend-name">' + en.name + '</span>';
       legend.appendChild(item);
     });
     sheet.appendChild(legend);
@@ -366,7 +364,6 @@
   bindSeg('paper-btns', 'paper', v => { state.paper = v; });
   bindSeg('orient-btns', 'orient', v => { state.orient = v; });
   bindSeg('namedate-btns', 'namedate', v => { state.nameDate = v === 'on'; });
-  bindSeg('color-btns', 'colormode', v => { state.pencil12 = v === 'pencil12'; });
   bindSeg('bgfill-btns', 'bgfill', v => { state.bgFill = v === 'on'; });
 
   $('btn-print').addEventListener('click', () => window.print());
