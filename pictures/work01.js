@@ -1,8 +1,8 @@
-/* 도안: 셈하기 2+8 18×16 — 사용자 제작 픽셀아트 활동지 (원본 수록) */
+/* 도안: 셈하기 1 18×16 — 사용자 제작 픽셀아트 활동지 (원본 수록) */
 (() => {
   window.PIXELS = window.PIXELS || [];
   PIXELS.push({
-    id: 'work01', name: '셈하기 2+8', emoji: '🔢', category: 'work', level: 2,
+    id: 'work01', name: '셈하기 1', emoji: '🔢', category: 'work', level: 2,
     palette: ['#E53935', '#FDD835', '#212121', '#4FC3F7', '#8BC34A', '#F48FB1', '#F57C00', '#388E3C', '#6D4C41'],
     rows: [
       '021385241236841620',

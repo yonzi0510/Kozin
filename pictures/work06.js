@@ -1,8 +1,8 @@
-/* 도안: 글자 놀이 2 18×16 — 사용자 제작 픽셀아트 활동지 (원본 수록) */
+/* 도안: 글자 찾기 2 18×16 — 사용자 제작 픽셀아트 활동지 (원본 수록) */
 (() => {
   window.PIXELS = window.PIXELS || [];
   PIXELS.push({
-    id: 'work06', name: '글자 놀이 2', emoji: '✏️', category: 'work', level: 2,
+    id: 'work06', name: '글자 찾기 2', emoji: '✏️', category: 'work', level: 2,
     palette: ['#E53935', '#FDD835', '#8BC34A', '#4FC3F7', '#212121', '#F48FB1', '#F57C00', '#388E3C', '#6D4C41'],
     rows: [
       '130527513258287200',

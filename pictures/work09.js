@@ -1,8 +1,8 @@
-/* 도안: 입춘 18×16 — 사용자 제작 픽셀아트 활동지 (원본 수록) */
+/* 도안: 글자 찾기 4 18×16 — 사용자 제작 픽셀아트 활동지 (원본 수록) */
 (() => {
   window.PIXELS = window.PIXELS || [];
   PIXELS.push({
-    id: 'work09', name: '입춘', emoji: '🌱', category: 'work', level: 2,
+    id: 'work09', name: '글자 찾기 4', emoji: '🌱', category: 'work', level: 2,
     palette: ['#F48FB1', '#1976D2', '#8BC34A', '#6D4C41', '#7B1FA2', '#FDD835', '#F57C00', '#388E3C', '#4FC3F7', '#212121'],
     rows: [
       '005212614004216710',

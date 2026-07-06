@@ -334,7 +334,7 @@
 
     const foot = document.createElement('div');
     foot.className = 'sheet-foot';
-    foot.textContent = '픽셀 도안 인쇄 — 어르신 인지학습 활동지';
+    foot.textContent = '인지학습지';
     sheet.appendChild(foot);
 
     fitPreview(pw, ph);
