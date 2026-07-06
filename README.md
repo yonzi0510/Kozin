@@ -28,10 +28,10 @@
 ## 개발
 
 ```
-index.html                              # 루트 → work/pixel/ 자동 이동
-work/pixel/index.html·print.css·print.js  # 인쇄 툴
-work/pixel/pictures/*.js                # 도안 (그림 1개 = 파일 1개)
-work/pixel/tools/validate-picture.js    # 도안 계약 검증: node work/pixel/tools/validate-picture.js
+index.html                              # 루트 → pixel/ 자동 이동
+pixel/index.html·print.css·print.js  # 인쇄 툴
+pixel/pictures/*.js                # 도안 (그림 1개 = 파일 1개)
+pixel/tools/validate-picture.js    # 도안 계약 검증: node pixel/tools/validate-picture.js
 ```
 
 도안 계약: `PIXELS.push({ id, name, emoji, category, level, palette: ['#hex', ...], rows: ['0120...', ...] })`
@@ -40,5 +40,5 @@ work/pixel/tools/validate-picture.js    # 도안 계약 검증: node work/pixel/
 ## GitHub Pages 배포
 
 Settings → Pages → "Deploy from a branch" → 기본 브랜치 · `/ (root)` 선택 후 저장하면
-`https://yonzi0510.github.io/Kozin/work/pixel/` 에서 바로 사용할 수 있습니다.
+`https://yonzi0510.github.io/work/pixel/` 에서 바로 사용할 수 있습니다.
 (루트 `…/Kozin/` 접속 시 자동 이동)
