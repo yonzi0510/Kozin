@@ -1,0 +1,469 @@
+<title>시안 6 · 크레용 손그림</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gamja+Flower&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --crayon:#ff8fab;
+    --crayon-dark:#e0567f;
+    --crayon-soft:#ffc2d6;
+    --cream:#fffaf1;
+    --cream2:#fff3e3;
+    --ink:#5b4636;
+    --ink-soft:#8a7561;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; min-height:100%; }
+  body{
+    background:
+      radial-gradient(circle at 10% 10%, rgba(255,143,171,.14), transparent 42%),
+      radial-gradient(circle at 90% 15%, rgba(255,214,120,.14), transparent 42%),
+      radial-gradient(circle at 15% 90%, rgba(160,214,255,.14), transparent 42%),
+      radial-gradient(circle at 88% 88%, rgba(180,236,200,.14), transparent 42%),
+      #fdf6ec;
+    font-family:'Gaegu', sans-serif;
+    color:var(--ink);
+  }
+  @media (prefers-color-scheme: dark){
+    body{
+      background:
+        radial-gradient(circle at 10% 10%, rgba(255,143,171,.10), transparent 42%),
+        radial-gradient(circle at 90% 15%, rgba(255,214,120,.08), transparent 42%),
+        radial-gradient(circle at 15% 90%, rgba(160,214,255,.08), transparent 42%),
+        radial-gradient(circle at 88% 88%, rgba(180,236,200,.08), transparent 42%),
+        #2a2420;
+    }
+  }
+
+  .page-wrap{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:30px 14px 60px;
+  }
+
+  .sian-label{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:var(--cream);
+    border:2px dashed var(--crayon);
+    color:var(--ink-soft);
+    font-family:'Gaegu', sans-serif;
+    font-weight:700;
+    font-size:13px;
+    padding:6px 14px;
+    border-radius:999px;
+    margin-bottom:20px;
+    transform:rotate(-1.1deg);
+    box-shadow:0 3px 0 rgba(224,86,127,.12);
+  }
+  .sian-label b{ color:var(--crayon-dark); }
+
+  .stage{ width:100%; max-width:430px; position:relative; }
+
+  /* ---------- 다이어리 카드 (크레용 삐뚤빼뚤 테두리) ---------- */
+  .diary-page{
+    position:relative;
+    overflow:visible;
+    background:var(--cream);
+    border-radius:26px;
+    padding:30px 24px 30px;
+    box-shadow:0 16px 36px -16px rgba(150,100,90,.35);
+  }
+  /* 크레용 결 텍스처 (은은한 얼룩) */
+  .diary-page::before{
+    content:"";
+    position:absolute; inset:0;
+    border-radius:26px;
+    background-image:
+      radial-gradient(circle at 20% 15%, rgba(255,180,205,.16) 0, transparent 7%),
+      radial-gradient(circle at 82% 10%, rgba(160,220,255,.14) 0, transparent 8%),
+      radial-gradient(circle at 75% 85%, rgba(255,225,150,.16) 0, transparent 7%),
+      radial-gradient(circle at 12% 82%, rgba(190,235,205,.16) 0, transparent 7%);
+    pointer-events:none;
+  }
+  .frame-svg{
+    position:absolute;
+    inset:-9px;
+    width:calc(100% + 18px);
+    height:calc(100% + 18px);
+    pointer-events:none;
+    z-index:5;
+  }
+  .diary-page > *:not(.frame-svg):not(.corner-doodle){ position:relative; z-index:1; }
+
+  /* ---------- 코너 낙서 ---------- */
+  .corner-doodle{
+    position:absolute;
+    width:58px; height:58px;
+    z-index:6;
+    pointer-events:none;
+    filter:drop-shadow(0 2px 2px rgba(90,60,40,.12));
+  }
+  .corner-doodle svg{ width:100%; height:100%; overflow:visible; }
+  .doodle-rabbit{ top:-22px; left:-20px; transform:rotate(-8deg); }
+  .doodle-sun{ top:-24px; right:-18px; width:52px; height:52px; transform:rotate(6deg); }
+  .doodle-flower{ bottom:-20px; left:-18px; width:50px; height:50px; transform:rotate(4deg); }
+  .doodle-heart{ bottom:-18px; right:-16px; width:46px; height:46px; transform:rotate(-10deg); }
+  .doodle-star{ top:96px; right:-14px; width:34px; height:34px; transform:rotate(14deg); z-index:2; }
+  .doodle-bear{ bottom:64px; left:-20px; width:44px; height:44px; transform:rotate(-6deg); }
+
+  @media (max-width:400px){
+    .corner-doodle{ display:none; }
+  }
+
+  /* ---------- 헤더 ---------- */
+  .header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .date-weather{ display:flex; flex-direction:column; gap:4px; }
+  .date-text{ font-weight:700; font-size:17px; color:var(--ink); }
+  .weather-row{ display:flex; align-items:center; gap:6px; font-size:13px; color:var(--ink-soft); }
+  .weather-row .icon{ font-size:16px; }
+
+  .dday-wrap{ position:relative; width:96px; height:76px; flex-shrink:0; }
+  .dday-wrap svg{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+  .dday-text{
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    line-height:1.2; transform:rotate(-3deg);
+  }
+  .dday-text .s1{ font-size:9.5px; font-weight:700; color:var(--crayon-dark); letter-spacing:.02em; }
+  .dday-text .s2{ font-family:'Gamja Flower', cursive; font-size:19px; color:var(--crayon-dark); }
+
+  /* ---------- 제목 ---------- */
+  .title-wrap{ position:relative; text-align:center; margin:8px 0 20px; }
+  .title-wrap h1{
+    margin:0;
+    font-family:'Gamja Flower', cursive;
+    font-size:30px;
+    font-weight:400;
+    color:var(--ink);
+    letter-spacing:.01em;
+  }
+  .title-underline{ width:78%; margin:2px auto 0; height:14px; }
+  .title-underline svg{ width:100%; height:100%; display:block; overflow:visible; }
+
+  /* ---------- 사진 콜라주 ---------- */
+  .photobook{ margin-bottom:22px; }
+  .photobook-label{
+    font-family:'Gaegu', sans-serif;
+    font-weight:700;
+    font-size:13px;
+    color:var(--ink-soft);
+    margin:0 2px 10px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .photo-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:16px 12px;
+  }
+  .photo-cell{ position:relative; }
+  .photo-cell:nth-child(1){ transform:rotate(-3deg); }
+  .photo-cell:nth-child(2){ transform:rotate(2deg); }
+  .photo-cell:nth-child(3){ transform:rotate(-2deg); }
+  .photo-cell:nth-child(4){ transform:rotate(2.5deg); }
+  .photo-cell:nth-child(5){ transform:rotate(-1.5deg); }
+  .photo-cell:nth-child(6){ transform:rotate(3deg); }
+
+  .photo-box{
+    aspect-ratio:1/1;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    box-shadow:0 3px 8px -2px rgba(90,60,40,.22);
+  }
+  .photo-cell:nth-child(1) .photo-box{ background:#ffd3e2; }
+  .photo-cell:nth-child(2) .photo-box{ background:#fff0b3; }
+  .photo-cell:nth-child(3) .photo-box{ background:#cfe8ff; }
+  .photo-cell:nth-child(4) .photo-box{ background:#c9f2df; }
+  .photo-cell:nth-child(5) .photo-box{ background:#e3d6f7; }
+  .photo-cell:nth-child(6) .photo-box{ background:#ffe0c2; }
+
+  .photo-frame-svg{
+    position:absolute; inset:-6px;
+    width:calc(100% + 12px); height:calc(100% + 12px);
+    pointer-events:none;
+  }
+  .photo-cap{
+    text-align:center;
+    margin-top:6px;
+    font-family:'Nanum Pen Script', cursive;
+    font-size:14px;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- 본문 (손그림 밑줄) ---------- */
+  .diary-body{ margin-bottom:8px; }
+  .diary-body-label{
+    font-family:'Gaegu', sans-serif;
+    font-weight:700;
+    font-size:13px;
+    color:var(--ink-soft);
+    margin:0 2px 10px;
+  }
+  .diary-line{ margin-bottom:14px; }
+  .diary-line .hand-text{
+    display:block;
+    font-family:'Gamja Flower', cursive;
+    font-size:19px;
+    color:var(--ink);
+    padding:0 4px 4px;
+    line-height:1.3;
+  }
+  .underline-svg{ width:100%; height:12px; display:block; overflow:visible; }
+
+  /* ---------- 하단 서명 ---------- */
+  .footer{
+    margin-top:16px;
+    text-align:right;
+    font-family:'Nanum Pen Script', cursive;
+    font-size:20px;
+    color:var(--crayon-dark);
+    padding-right:4px;
+  }
+
+  footer.hint{
+    margin-top:20px;
+    font-size:12px;
+    color:var(--ink-soft);
+    text-align:center;
+    opacity:.75;
+  }
+</style>
+
+<div class="page-wrap">
+  <div class="sian-label">시안 6 <b>·</b> 크레용 손그림</div>
+
+  <div class="stage">
+    <!-- 공용 필터 정의 -->
+    <svg width="0" height="0" style="position:absolute">
+      <defs>
+        <filter id="rough1" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.012 0.028" numOctaves="2" seed="4" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="9" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+        <filter id="rough2" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.02 0.04" numOctaves="2" seed="11" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="7" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+        <filter id="roughFrameA" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="2" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+        <filter id="roughFrameB" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="9" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="6" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+        <filter id="roughLine" x="-20%" y="-40%" width="140%" height="180%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.06 0.35" numOctaves="2" seed="6" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+        <filter id="roughDoodle" x="-30%" y="-30%" width="160%" height="160%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" seed="7" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+      </defs>
+    </svg>
+
+    <div class="diary-page">
+      <!-- 크레용 삐뚤빼뚤 테두리 (겹쳐그린 두 겹) -->
+      <svg class="frame-svg" viewBox="0 0 400 640" preserveAspectRatio="none">
+        <rect x="16" y="16" width="368" height="608" rx="30" ry="30"
+              fill="none" stroke="#ff8fab" stroke-width="7" filter="url(#rough1)"/>
+        <rect x="10" y="10" width="380" height="620" rx="34" ry="34"
+              fill="none" stroke="#ffc2d6" stroke-width="4"
+              filter="url(#rough2)"/>
+      </svg>
+
+      <!-- 코너 낙서 데코 -->
+      <div class="corner-doodle doodle-rabbit">
+        <svg viewBox="0 0 60 60">
+          <ellipse cx="21" cy="14" rx="6.5" ry="15" fill="#ffeef4" stroke="#ff8fab" stroke-width="3" filter="url(#roughDoodle)" transform="rotate(-12 21 14)"/>
+          <ellipse cx="39" cy="14" rx="6.5" ry="15" fill="#ffeef4" stroke="#ff8fab" stroke-width="3" filter="url(#roughDoodle)" transform="rotate(12 39 14)"/>
+          <circle cx="30" cy="36" r="17" fill="#fffaf6" stroke="#ff8fab" stroke-width="3" filter="url(#roughDoodle)"/>
+          <circle cx="24" cy="34" r="2.2" fill="#5b4636"/>
+          <circle cx="36" cy="34" r="2.2" fill="#5b4636"/>
+          <path d="M27,40 Q30,43 33,40" stroke="#5b4636" stroke-width="2" fill="none" stroke-linecap="round" filter="url(#roughDoodle)"/>
+        </svg>
+      </div>
+
+      <div class="corner-doodle doodle-sun">
+        <svg viewBox="0 0 60 60">
+          <g stroke="#ffb703" stroke-width="3.2" stroke-linecap="round" filter="url(#roughDoodle)">
+            <line x1="30" y1="1" x2="30" y2="12"/>
+            <line x1="30" y1="48" x2="30" y2="59"/>
+            <line x1="1" y1="30" x2="12" y2="30"/>
+            <line x1="48" y1="30" x2="59" y2="30"/>
+            <line x1="8" y1="8" x2="16" y2="16"/>
+            <line x1="44" y1="44" x2="52" y2="52"/>
+            <line x1="52" y1="8" x2="44" y2="16"/>
+            <line x1="16" y1="44" x2="8" y2="52"/>
+          </g>
+          <circle cx="30" cy="30" r="14" fill="#ffd166" stroke="#ffb703" stroke-width="3.2" filter="url(#roughDoodle)"/>
+        </svg>
+      </div>
+
+      <div class="corner-doodle doodle-flower">
+        <svg viewBox="0 0 60 60">
+          <g fill="#dcb6f2" stroke="#a06bcf" stroke-width="2.6" filter="url(#roughDoodle)">
+            <circle cx="30" cy="16" r="9"/>
+            <circle cx="30" cy="44" r="9"/>
+            <circle cx="16" cy="30" r="9"/>
+            <circle cx="44" cy="30" r="9"/>
+          </g>
+          <circle cx="30" cy="30" r="8" fill="#ffd166" stroke="#e6a817" stroke-width="2.6" filter="url(#roughDoodle)"/>
+        </svg>
+      </div>
+
+      <div class="corner-doodle doodle-heart">
+        <svg viewBox="0 0 60 60">
+          <path d="M30,50 C10,36 4,22 14,14 C21,8 30,14 30,20 C30,14 39,8 46,14 C56,22 50,36 30,50 Z"
+                fill="#ff9eb5" stroke="#e0567f" stroke-width="3" filter="url(#roughDoodle)"/>
+        </svg>
+      </div>
+
+      <div class="corner-doodle doodle-star">
+        <svg viewBox="0 0 60 60">
+          <path d="M30,4 L36,22 L55,22 L39,33 L45,52 L30,40 L15,52 L21,33 L5,22 L24,22 Z"
+                fill="#ffe066" stroke="#f2a900" stroke-width="3" stroke-linejoin="round" filter="url(#roughDoodle)"/>
+        </svg>
+      </div>
+
+      <div class="corner-doodle doodle-bear">
+        <svg viewBox="0 0 60 60">
+          <circle cx="15" cy="15" r="7" fill="#e9c9a3" stroke="#a5714a" stroke-width="3" filter="url(#roughDoodle)"/>
+          <circle cx="45" cy="15" r="7" fill="#e9c9a3" stroke="#a5714a" stroke-width="3" filter="url(#roughDoodle)"/>
+          <circle cx="30" cy="33" r="18" fill="#f1d7b3" stroke="#a5714a" stroke-width="3" filter="url(#roughDoodle)"/>
+          <circle cx="23" cy="31" r="2.1" fill="#5b4636"/>
+          <circle cx="37" cy="31" r="2.1" fill="#5b4636"/>
+          <ellipse cx="30" cy="39" rx="5" ry="3.6" fill="#8a5a34" opacity=".85"/>
+        </svg>
+      </div>
+
+      <!-- 헤더 -->
+      <div class="header">
+        <div class="date-weather">
+          <div class="date-text">2026. 7. 23. 목요일</div>
+          <div class="weather-row"><span class="icon">☀️</span>맑고 포근한 여름날</div>
+        </div>
+        <div class="dday-wrap">
+          <svg viewBox="0 0 96 76" preserveAspectRatio="none">
+            <path d="M14,10 C40,2 70,4 84,14 C94,22 92,54 78,64 C54,74 24,72 10,60 C0,50 2,20 14,10 Z"
+                  fill="#ffe3ec" stroke="#ff8fab" stroke-width="3.5" filter="url(#roughFrameA)"/>
+          </svg>
+          <div class="dday-text">
+            <span class="s1">태어난지</span>
+            <span class="s2">D+128</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 제목 -->
+      <div class="title-wrap">
+        <h1>오늘은 첫 이유식</h1>
+        <div class="title-underline">
+          <svg viewBox="0 0 300 14" preserveAspectRatio="none">
+            <path d="M4,7 Q75,2 150,7 T296,7" fill="none" stroke="#ff8fab" stroke-width="4.5"
+                  stroke-linecap="round" filter="url(#roughLine)"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- 사진 콜라주 -->
+      <div class="photobook">
+        <div class="photobook-label">📸 오늘의 사진 6컷</div>
+        <div class="photo-grid">
+          <div class="photo-cell">
+            <div class="photo-box">👶</div>
+            <svg class="photo-frame-svg" viewBox="0 0 120 120" preserveAspectRatio="none">
+              <rect x="6" y="6" width="108" height="108" rx="16" fill="none" stroke="#ff8fab" stroke-width="5" filter="url(#roughFrameA)"/>
+            </svg>
+            <div class="photo-cap">아침 인사</div>
+          </div>
+          <div class="photo-cell">
+            <div class="photo-box">🥣</div>
+            <svg class="photo-frame-svg" viewBox="0 0 120 120" preserveAspectRatio="none">
+              <rect x="6" y="6" width="108" height="108" rx="16" fill="none" stroke="#ff8fab" stroke-width="5" filter="url(#roughFrameB)"/>
+            </svg>
+            <div class="photo-cap">첫 숟갈</div>
+          </div>
+          <div class="photo-cell">
+            <div class="photo-box">🍼</div>
+            <svg class="photo-frame-svg" viewBox="0 0 120 120" preserveAspectRatio="none">
+              <rect x="6" y="6" width="108" height="108" rx="16" fill="none" stroke="#ff8fab" stroke-width="5" filter="url(#roughFrameA)"/>
+            </svg>
+            <div class="photo-cap">우유도 냠</div>
+          </div>
+          <div class="photo-cell">
+            <div class="photo-box">🧸</div>
+            <svg class="photo-frame-svg" viewBox="0 0 120 120" preserveAspectRatio="none">
+              <rect x="6" y="6" width="108" height="108" rx="16" fill="none" stroke="#ff8fab" stroke-width="5" filter="url(#roughFrameB)"/>
+            </svg>
+            <div class="photo-cap">놀이 시간</div>
+          </div>
+          <div class="photo-cell">
+            <div class="photo-box">🌙</div>
+            <svg class="photo-frame-svg" viewBox="0 0 120 120" preserveAspectRatio="none">
+              <rect x="6" y="6" width="108" height="108" rx="16" fill="none" stroke="#ff8fab" stroke-width="5" filter="url(#roughFrameA)"/>
+            </svg>
+            <div class="photo-cap">쿨쿨 낮잠</div>
+          </div>
+          <div class="photo-cell">
+            <div class="photo-box">🐤</div>
+            <svg class="photo-frame-svg" viewBox="0 0 120 120" preserveAspectRatio="none">
+              <rect x="6" y="6" width="108" height="108" rx="16" fill="none" stroke="#ff8fab" stroke-width="5" filter="url(#roughFrameB)"/>
+            </svg>
+            <div class="photo-cap">병아리 산책</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 본문 (손그림 밑줄) -->
+      <div class="diary-body">
+        <div class="diary-body-label">📝 오늘의 일기</div>
+
+        <div class="diary-line">
+          <span class="hand-text">오늘은 아기 인생 첫 이유식을 먹은 날이다!</span>
+          <svg class="underline-svg" viewBox="0 0 400 12" preserveAspectRatio="none">
+            <path d="M4,6 Q100,2 200,6 T396,6" fill="none" stroke="#ffc2d6" stroke-width="3.5"
+                  stroke-linecap="round" filter="url(#roughLine)"/>
+          </svg>
+        </div>
+
+        <div class="diary-line">
+          <span class="hand-text">조그만 숟가락으로 쌀미음을 조금씩 떠먹여 주었는데</span>
+          <svg class="underline-svg" viewBox="0 0 400 12" preserveAspectRatio="none">
+            <path d="M4,6 Q100,10 200,6 T396,6" fill="none" stroke="#ffc2d6" stroke-width="3.5"
+                  stroke-linecap="round" filter="url(#roughLine)"/>
+          </svg>
+        </div>
+
+        <div class="diary-line">
+          <span class="hand-text">오물오물 잘 받아먹는 모습에 눈물이 핑 돌았다 💗</span>
+          <svg class="underline-svg" viewBox="0 0 400 12" preserveAspectRatio="none">
+            <path d="M4,6 Q100,2 200,6 T396,6" fill="none" stroke="#ffc2d6" stroke-width="3.5"
+                  stroke-linecap="round" filter="url(#roughLine)"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="footer">- 엄마 씀 -</div>
+    </div>
+  </div>
+
+  <footer class="hint">크레용 손그림 테마 · 육아 그림일기 디자인 시안 6</footer>
+</div>
