@@ -1,0 +1,463 @@
+<title>시안 4 · 수채화 감성 육아일기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Song+Myung&family=Gowun+Batang:wght@400;700&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --apricot:#ffd9bf;
+    --apricot-soft:#ffe9d9;
+    --sky:#c7e6f5;
+    --sky-soft:#e2f2fa;
+    --lavender:#e2d6f2;
+    --lavender-soft:#f0e8fa;
+    --ink:#5b4a42;
+    --ink-soft:#8a7a70;
+    --paper:#fffaf3;
+    --line:rgba(150,120,100,0.18);
+  }
+
+  *{box-sizing:border-box;}
+
+  html,body{
+    margin:0;
+    padding:0;
+    min-height:100%;
+  }
+
+  body{
+    font-family:'Gowun Batang', serif;
+    color:var(--ink);
+    background:
+      radial-gradient(ellipse 60% 45% at 12% 8%, var(--apricot) 0%, rgba(255,217,191,0) 70%),
+      radial-gradient(ellipse 55% 40% at 88% 15%, var(--sky) 0%, rgba(199,230,245,0) 70%),
+      radial-gradient(ellipse 60% 50% at 20% 92%, var(--lavender) 0%, rgba(226,214,242,0) 72%),
+      radial-gradient(ellipse 65% 55% at 95% 90%, var(--sky-soft) 0%, rgba(226,242,250,0) 70%),
+      linear-gradient(180deg, #fbf6ee 0%, #f7f0e6 100%);
+    background-attachment:fixed;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    padding:32px 14px 60px;
+    position:relative;
+    overflow-x:hidden;
+  }
+
+  /* 은은한 종이 질감 */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:0.5;
+    mix-blend-mode:multiply;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.6) 0%, transparent 2%),
+      radial-gradient(circle at 70% 60%, rgba(255,255,255,0.5) 0%, transparent 2%),
+      radial-gradient(circle at 40% 80%, rgba(255,255,255,0.5) 0%, transparent 2%),
+      repeating-radial-gradient(circle at 50% 50%, rgba(120,90,70,0.015) 0px, rgba(120,90,70,0.015) 1px, transparent 2px, transparent 3px);
+    background-size:auto, auto, auto, 5px 5px;
+  }
+
+  .stage{
+    position:relative;
+    width:100%;
+    max-width:430px;
+    z-index:1;
+  }
+
+  .sian-label{
+    text-align:center;
+    font-family:'Gaegu', cursive;
+    font-size:13px;
+    letter-spacing:0.06em;
+    color:var(--ink-soft);
+    margin-bottom:10px;
+    opacity:0.85;
+  }
+  .sian-label span{
+    padding:3px 12px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.55);
+    border:1px solid var(--line);
+  }
+
+  /* ===== 일기 카드 ===== */
+  .page{
+    position:relative;
+    background:var(--paper);
+    border-radius:26px;
+    padding:26px 22px 34px;
+    box-shadow:
+      0 2px 6px rgba(150,110,80,0.08),
+      0 18px 40px -18px rgba(120,90,70,0.28),
+      0 0 0 1px rgba(255,255,255,0.6) inset;
+    overflow:hidden;
+  }
+
+  /* 카드 안쪽으로 은은하게 스며드는 수채 얼룩 */
+  .page::before{
+    content:"";
+    position:absolute;
+    inset:-10%;
+    z-index:0;
+    pointer-events:none;
+    opacity:0.55;
+    filter:blur(2px);
+    background:
+      radial-gradient(circle at 8% 6%, var(--apricot-soft) 0%, transparent 32%),
+      radial-gradient(circle at 96% 10%, var(--sky-soft) 0%, transparent 30%),
+      radial-gradient(circle at 90% 95%, var(--lavender-soft) 0%, transparent 34%),
+      radial-gradient(circle at 4% 96%, var(--apricot-soft) 0%, transparent 28%);
+  }
+
+  .page > *{
+    position:relative;
+    z-index:1;
+  }
+
+  /* ===== 헤더 ===== */
+  .diary-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    margin-bottom:6px;
+  }
+
+  .date-weather{
+    display:flex;
+    align-items:baseline;
+    gap:7px;
+    font-size:14px;
+    color:var(--ink-soft);
+    letter-spacing:0.01em;
+  }
+  .date-weather .date{
+    font-weight:700;
+    color:var(--ink);
+    font-size:14.5px;
+  }
+  .date-weather .weather-icon{
+    font-size:16px;
+    filter:drop-shadow(0 1px 1px rgba(255,180,90,0.35));
+  }
+
+  .dday-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    font-family:'Gaegu', cursive;
+    font-size:13px;
+    font-weight:700;
+    color:#8a5a3c;
+    background:
+      radial-gradient(circle at 30% 20%, #ffe6cf 0%, #ffd7ae 55%, #ffcf9d 100%);
+    padding:5px 12px 5px 10px;
+    border-radius:16px;
+    box-shadow:0 3px 8px -3px rgba(200,130,70,0.45), 0 0 0 1px rgba(255,255,255,0.6) inset;
+    white-space:nowrap;
+  }
+  .dday-badge .egg{font-size:14px;}
+
+  /* ===== 제목 ===== */
+  .title-wrap{
+    position:relative;
+    text-align:center;
+    margin:18px 0 22px;
+  }
+  .title-wrap .blob{
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:250px;
+    height:86px;
+    transform:translate(-50%,-52%) rotate(-2deg);
+    background:radial-gradient(ellipse at center, var(--lavender-soft) 0%, rgba(226,214,242,0.5) 45%, rgba(226,214,242,0) 75%);
+    filter:blur(4px);
+    z-index:0;
+  }
+  .diary-title{
+    position:relative;
+    z-index:1;
+    font-family:'Song Myung', serif;
+    font-size:26px;
+    letter-spacing:0.02em;
+    color:#5a4436;
+    margin:0;
+    line-height:1.4;
+  }
+  .title-sub{
+    position:relative;
+    z-index:1;
+    margin-top:6px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    letter-spacing:0.12em;
+  }
+
+  /* ===== 사진 그리드 ===== */
+  .photo-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    grid-template-rows:repeat(2, 1fr);
+    gap:6px;
+    margin-bottom:24px;
+  }
+  .photo-cell{
+    position:relative;
+    aspect-ratio:1/1;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    overflow:hidden;
+  }
+  .photo-cell .emoji{
+    filter:drop-shadow(0 2px 4px rgba(90,60,40,0.18));
+    transform:translateZ(0);
+  }
+  /* 각 셀 고유 수채 배경 */
+  .photo-cell.c1{ background:radial-gradient(circle at 35% 30%, #ffe3cf 0%, #ffd2b0 45%, #ffc59a 100%); }
+  .photo-cell.c2{ background:radial-gradient(circle at 65% 35%, #d9f0ea 0%, #b9e3da 50%, #9fd6ca 100%); }
+  .photo-cell.c3{ background:radial-gradient(circle at 40% 65%, #dfe5fb 0%, #c4cef5 50%, #aab7ee 100%); }
+  .photo-cell.c4{ background:radial-gradient(circle at 60% 30%, #fbe1ee 0%, #f3c3dc 50%, #ecabcd 100%); }
+  .photo-cell.c5{ background:radial-gradient(circle at 30% 70%, #e6ddf7 0%, #d3c1ef 50%, #bfa9e6 100%); }
+  .photo-cell.c6{ background:radial-gradient(circle at 55% 55%, #fff2d0 0%, #ffe3a3 50%, #ffd77e 100%); }
+
+  /* 수채 번짐 페이드 마스크 - 모서리가 부드럽게 사라지는 느낌 */
+  .photo-cell::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      radial-gradient(ellipse at 30% 25%, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0) 55%),
+      radial-gradient(ellipse at 75% 80%, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 60%);
+    -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.9) 55%, rgba(0,0,0,0) 100%);
+            mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.9) 55%, rgba(0,0,0,0) 100%);
+  }
+  .photo-cell::before{
+    content:"";
+    position:absolute;
+    inset:-3px;
+    -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 92%);
+            mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 92%);
+    background:inherit;
+    filter:blur(6px) saturate(1.05);
+    z-index:-1;
+  }
+
+  /* ===== 원고지 본문 ===== */
+  .manuscript-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:10px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    letter-spacing:0.08em;
+  }
+  .manuscript-label::before,
+  .manuscript-label::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:linear-gradient(90deg, transparent, var(--line), transparent);
+  }
+
+  .manuscript{
+    position:relative;
+    border-radius:14px;
+    padding:14px 10px;
+    background:
+      radial-gradient(ellipse at 15% 10%, rgba(255,225,205,0.4) 0%, transparent 55%),
+      radial-gradient(ellipse at 90% 90%, rgba(210,225,250,0.35) 0%, transparent 55%),
+      #fffdf8;
+    box-shadow:0 0 0 1px rgba(150,120,100,0.10) inset;
+  }
+
+  .mg-row{
+    display:grid;
+    grid-template-columns:repeat(12, 1fr);
+    gap:3px;
+    margin-bottom:3px;
+  }
+  .mg-cell{
+    position:relative;
+    aspect-ratio:1/1;
+    border:1px solid var(--line);
+    border-radius:3px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+    font-family:'Gowun Batang', serif;
+    color:#4a3b32;
+    background:rgba(255,255,255,0.4);
+  }
+  .mg-cell.empty{
+    border-color:rgba(150,120,100,0.10);
+    background:rgba(255,255,255,0.15);
+  }
+
+  .diary-footnote{
+    margin-top:16px;
+    text-align:right;
+    font-family:'Gaegu', cursive;
+    font-size:13px;
+    color:var(--ink-soft);
+    letter-spacing:0.03em;
+  }
+
+  /* 하단 작은 도장 느낌 워터마크 */
+  .stamp{
+    position:absolute;
+    bottom:14px;
+    left:22px;
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    background:radial-gradient(circle at 40% 35%, rgba(230,110,90,0.55), rgba(200,80,70,0.35) 70%, transparent 100%);
+    filter:blur(0.3px);
+    opacity:0.75;
+  }
+  .stamp::after{
+    content:"記";
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Song Myung', serif;
+    font-size:15px;
+    color:#fff;
+    opacity:0.9;
+  }
+
+  @media (max-width:360px){
+    .diary-title{font-size:22px;}
+    .mg-row{grid-template-columns:repeat(10, 1fr);}
+  }
+
+  @media (prefers-color-scheme: dark){
+    body{
+      background:
+        radial-gradient(ellipse 60% 45% at 12% 8%, #6b4a38 0%, rgba(107,74,56,0) 70%),
+        radial-gradient(ellipse 55% 40% at 88% 15%, #2f4d57 0%, rgba(47,77,87,0) 70%),
+        radial-gradient(ellipse 60% 50% at 20% 92%, #453a58 0%, rgba(69,58,88,0) 72%),
+        radial-gradient(ellipse 65% 55% at 95% 90%, #2b3e46 0%, rgba(43,62,70,0) 70%),
+        linear-gradient(180deg, #221d1a 0%, #1b1714 100%);
+    }
+    .page{
+      background:#2a2420;
+      box-shadow:0 2px 6px rgba(0,0,0,0.3), 0 18px 40px -18px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04) inset;
+    }
+    :root{
+      --ink:#eadfd2;
+      --ink-soft:#b8a99a;
+      --line:rgba(230,210,190,0.14);
+    }
+    .diary-title{color:#f1e4d4;}
+    .manuscript{background:#332c26;}
+    .mg-cell{background:rgba(255,255,255,0.03); color:#e8dccd;}
+    .sian-label span{background:rgba(60,52,46,0.6); border-color:rgba(230,210,190,0.14);}
+  }
+
+  :root[data-theme="dark"] body{
+    background:
+      radial-gradient(ellipse 60% 45% at 12% 8%, #6b4a38 0%, rgba(107,74,56,0) 70%),
+      radial-gradient(ellipse 55% 40% at 88% 15%, #2f4d57 0%, rgba(47,77,87,0) 70%),
+      radial-gradient(ellipse 60% 50% at 20% 92%, #453a58 0%, rgba(69,58,88,0) 72%),
+      radial-gradient(ellipse 65% 55% at 95% 90%, #2b3e46 0%, rgba(43,62,70,0) 70%),
+      linear-gradient(180deg, #221d1a 0%, #1b1714 100%);
+  }
+  :root[data-theme="dark"] .page{
+    background:#2a2420;
+    box-shadow:0 2px 6px rgba(0,0,0,0.3), 0 18px 40px -18px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04) inset;
+    --ink:#eadfd2;
+    --ink-soft:#b8a99a;
+    --line:rgba(230,210,190,0.14);
+  }
+  :root[data-theme="dark"] .diary-title{color:#f1e4d4;}
+  :root[data-theme="dark"] .manuscript{background:#332c26;}
+  :root[data-theme="dark"] .mg-cell{background:rgba(255,255,255,0.03); color:#e8dccd;}
+  :root[data-theme="light"] body{
+    background:
+      radial-gradient(ellipse 60% 45% at 12% 8%, var(--apricot) 0%, rgba(255,217,191,0) 70%),
+      radial-gradient(ellipse 55% 40% at 88% 15%, var(--sky) 0%, rgba(199,230,245,0) 70%),
+      radial-gradient(ellipse 60% 50% at 20% 92%, var(--lavender) 0%, rgba(226,214,242,0) 72%),
+      radial-gradient(ellipse 65% 55% at 95% 90%, var(--sky-soft) 0%, rgba(226,242,250,0) 70%),
+      linear-gradient(180deg, #fbf6ee 0%, #f7f0e6 100%);
+  }
+</style>
+
+<div class="stage">
+  <div class="sian-label"><span>시안 4 · 수채화 감성</span></div>
+
+  <div class="page">
+    <div class="diary-header">
+      <div class="date-weather">
+        <span class="date">2026. 7. 23. 목요일</span>
+        <span class="weather-icon">☀️</span>
+      </div>
+      <div class="dday-badge"><span class="egg">🐣</span>태어난지 D+128</div>
+    </div>
+
+    <div class="title-wrap">
+      <div class="blob"></div>
+      <h1 class="diary-title">오늘은 첫 이유식</h1>
+      <div class="title-sub">・ 우리 아가의 작은 하루 ・</div>
+    </div>
+
+    <div class="photo-grid">
+      <div class="photo-cell c1"><span class="emoji">👶</span></div>
+      <div class="photo-cell c2"><span class="emoji">🥣</span></div>
+      <div class="photo-cell c3"><span class="emoji">🍼</span></div>
+      <div class="photo-cell c4"><span class="emoji">🧸</span></div>
+      <div class="photo-cell c5"><span class="emoji">🌙</span></div>
+      <div class="photo-cell c6"><span class="emoji">🐤</span></div>
+    </div>
+
+    <div class="manuscript-label">오늘의 기록</div>
+    <div class="manuscript" id="manuscript"></div>
+
+    <div class="diary-footnote">— 엄마의 하루 中</div>
+  </div>
+</div>
+
+<script>
+  // 원고지 스타일: 문장을 한 글자씩 칸에 채워 넣기
+  (function(){
+    var lines = [
+      "오늘은 우리 아기 첫 이유식을 먹은 날.",
+      "조그만 숟가락 위 오물오물, 서툴게 삼키는",
+      "모습에 괜히 내 마음이 다 몽글몽글해졌다."
+    ];
+    var cols = 12;
+    var wrap = document.getElementById('manuscript');
+
+    lines.forEach(function(line){
+      var chars = Array.from(line);
+      var rowCount = Math.ceil(chars.length / cols) || 1;
+      for(var r = 0; r < rowCount; r++){
+        var row = document.createElement('div');
+        row.className = 'mg-row';
+        for(var c = 0; c < cols; c++){
+          var idx = r * cols + c;
+          var cell = document.createElement('div');
+          var ch = chars[idx];
+          if(ch === undefined || ch === ' '){
+            cell.className = 'mg-cell empty';
+            cell.textContent = '';
+          } else {
+            cell.className = 'mg-cell';
+            cell.textContent = ch;
+          }
+          row.appendChild(cell);
+        }
+        wrap.appendChild(row);
+      }
+    });
+  })();
+</script>

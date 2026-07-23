@@ -1,0 +1,502 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Gowun+Dodum&family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
+<title>시안 5 · 뉴트로 원고지</title>
+
+<style>
+  :root{
+    --paper:#f2e8d5;
+    --paper-2:#ece0c9;
+    --ink:#2b2620;
+    --ink-soft:#5a4f3e;
+    --red:#b6392c;
+    --red-soft:#c65a3f;
+    --navy:#233a5e;
+    --navy-2:#2f4a75;
+    --gridline: rgba(182,57,44,.55);
+    --gridline-soft: rgba(182,57,44,.32);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    min-height:100vh;
+    background:
+      radial-gradient(ellipse at top left, rgba(0,0,0,.05), transparent 55%),
+      radial-gradient(ellipse at bottom right, rgba(0,0,0,.06), transparent 55%),
+      #d9cdb2;
+    display:flex;
+    justify-content:center;
+    padding:28px 12px 60px;
+    font-family:'Gowun Dodum', sans-serif;
+    color:var(--ink);
+  }
+
+  .stage{
+    width:100%;
+    max-width:430px;
+  }
+
+  /* ---------- 시안 라벨 ---------- */
+  .sian-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin:0 4px 10px;
+    font-family:'Gowun Dodum', sans-serif;
+    font-size:12.5px;
+    color:#5c4b33;
+    letter-spacing:.02em;
+  }
+  .sian-label .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--red);
+    box-shadow:0 0 0 2px rgba(182,57,44,.18);
+  }
+  .sian-label b{
+    font-weight:800;
+    color:#3d3325;
+  }
+
+  /* ---------- 다이어리 카드 ---------- */
+  .diary{
+    position:relative;
+    background:
+      repeating-linear-gradient(0deg, rgba(150,120,70,.035) 0px, rgba(150,120,70,.035) 1px, transparent 1px, transparent 3px),
+      radial-gradient(circle at 15% 8%, rgba(255,255,255,.35), transparent 40%),
+      radial-gradient(circle at 85% 92%, rgba(0,0,0,.05), transparent 45%),
+      var(--paper);
+    border-radius:6px;
+    padding:22px 18px 26px;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.5) inset,
+      0 18px 40px -14px rgba(40,30,10,.45),
+      0 2px 6px rgba(40,30,10,.18);
+    border:1px solid rgba(90,70,40,.18);
+    overflow:hidden;
+  }
+  /* 낡은 종이 얼룩 */
+  .diary::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      radial-gradient(circle at 92% 14%, rgba(120,90,40,.10), transparent 12%),
+      radial-gradient(circle at 6% 78%, rgba(120,90,40,.08), transparent 14%),
+      radial-gradient(circle at 60% 96%, rgba(120,90,40,.07), transparent 16%);
+    pointer-events:none;
+  }
+  .diary > *{position:relative; z-index:1;}
+
+  /* ---------- 상단 헤더 ---------- */
+  .header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:2px solid var(--ink);
+    padding-bottom:10px;
+    margin-bottom:14px;
+  }
+  .header .date-weather{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+  .date{
+    font-weight:800;
+    font-size:16px;
+    letter-spacing:.01em;
+    color:var(--ink);
+  }
+  .weather{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+  }
+  .weather .icon{
+    font-size:16px;
+    filter:saturate(.85);
+  }
+
+  .dday-stamp{
+    position:relative;
+    width:92px; height:92px;
+    border-radius:50%;
+    border:3px double var(--red);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transform:rotate(-9deg);
+    flex-shrink:0;
+    font-family:'Do Hyeon', sans-serif;
+    color:var(--red);
+    mix-blend-mode:multiply;
+    opacity:.92;
+  }
+  .dday-stamp::after{
+    content:"";
+    position:absolute; inset:5px;
+    border-radius:50%;
+    border:1px solid var(--red);
+    opacity:.6;
+  }
+  .dday-stamp .txt{
+    text-align:center;
+    line-height:1.15;
+  }
+  .dday-stamp .txt .small{
+    display:block;
+    font-size:8.5px;
+    font-family:'Gowun Dodum', sans-serif;
+    font-weight:700;
+    letter-spacing:.03em;
+  }
+  .dday-stamp .txt .big{
+    display:block;
+    font-size:16px;
+    letter-spacing:.01em;
+  }
+
+  /* ---------- 제목 ---------- */
+  .title-wrap{
+    position:relative;
+    margin:6px 0 18px;
+    text-align:center;
+  }
+  .title-wrap .title{
+    display:inline-block;
+    font-family:'Do Hyeon', sans-serif;
+    font-size:27px;
+    color:var(--navy);
+    letter-spacing:.02em;
+    position:relative;
+    padding:2px 6px;
+  }
+  .title-wrap .title::before,
+  .title-wrap .title::after{
+    content:"";
+    position:absolute;
+    top:2px; bottom:2px;
+    width:3px;
+    background:var(--navy);
+    opacity:.85;
+  }
+  .title-wrap .title::before{ left:-8px; }
+  .title-wrap .title::after{ right:-8px; }
+  .title-sub{
+    margin-top:6px;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    letter-spacing:.12em;
+  }
+
+  /* ---------- 사진첩 그리드 ---------- */
+  .photobook{
+    background:var(--paper-2);
+    border:1px solid rgba(90,70,40,.28);
+    border-radius:4px;
+    padding:12px 12px 8px;
+    margin-bottom:20px;
+    position:relative;
+  }
+  .photobook-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:10px;
+    padding-bottom:6px;
+    border-bottom:1px dashed rgba(90,70,40,.4);
+  }
+  .photobook-head .label{
+    font-size:11px;
+    font-weight:700;
+    color:var(--ink-soft);
+    letter-spacing:.1em;
+  }
+  .photobook-head .count{
+    font-size:11px;
+    color:var(--red-soft);
+    font-weight:700;
+  }
+
+  .photo-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    grid-template-rows:repeat(2, 1fr);
+    gap:14px 10px;
+    padding:6px 2px 10px;
+  }
+
+  .photo-cell{
+    position:relative;
+    aspect-ratio:1/1;
+    background:#fff;
+    padding:6px 6px 16px;
+    box-shadow:
+      0 3px 6px rgba(40,30,10,.28),
+      0 1px 0 rgba(255,255,255,.6) inset;
+  }
+  .photo-cell:nth-child(1){ transform:rotate(-3deg); }
+  .photo-cell:nth-child(2){ transform:rotate(2deg); }
+  .photo-cell:nth-child(3){ transform:rotate(-1.5deg); }
+  .photo-cell:nth-child(4){ transform:rotate(1.5deg); }
+  .photo-cell:nth-child(5){ transform:rotate(-2.5deg); }
+  .photo-cell:nth-child(6){ transform:rotate(3deg); }
+
+  .photo-frame{
+    width:100%; height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    position:relative;
+    overflow:hidden;
+    filter:sepia(.28) saturate(1.05);
+  }
+  .photo-frame::after{
+    content:"";
+    position:absolute; inset:0;
+    box-shadow:inset 0 0 14px rgba(0,0,0,.25);
+  }
+  .photo-cell:nth-child(1) .photo-frame{ background:linear-gradient(150deg,#e8b98e,#c98a5e); }
+  .photo-cell:nth-child(2) .photo-frame{ background:linear-gradient(150deg,#9fb79a,#6f8f6b); }
+  .photo-cell:nth-child(3) .photo-frame{ background:linear-gradient(150deg,#d9c27e,#b6924b); }
+  .photo-cell:nth-child(4) .photo-frame{ background:linear-gradient(150deg,#a9c3cf,#6f93a3); }
+  .photo-cell:nth-child(5) .photo-frame{ background:linear-gradient(150deg,#c98f8f,#a4595c); }
+  .photo-cell:nth-child(6) .photo-frame{ background:linear-gradient(150deg,#c2b8a3,#948065); }
+
+  /* 사진 모서리 마운트 코너 */
+  .corner{
+    position:absolute;
+    width:11px; height:11px;
+    border-style:solid;
+    z-index:2;
+  }
+  .corner.tl{ top:2px; left:2px; border-width:11px 11px 0 0; border-color:#efe7d4 transparent transparent transparent; }
+  .corner.br{ bottom:12px; right:2px; border-width:0 0 11px 11px; border-color:transparent transparent #efe7d4 transparent; }
+
+  .photo-cap{
+    position:absolute;
+    bottom:3px; left:0; right:0;
+    text-align:center;
+    font-size:9px;
+    color:#6b5a3e;
+    font-weight:700;
+    letter-spacing:.02em;
+  }
+
+  /* ---------- 원고지 본문 ---------- */
+  .ms-section{
+    margin-top:4px;
+  }
+  .ms-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:6px;
+    padding:0 2px;
+  }
+  .ms-head .ms-title{
+    font-family:'Nanum Myeongjo', serif;
+    font-weight:800;
+    font-size:13px;
+    color:var(--navy);
+    letter-spacing:.06em;
+  }
+  .ms-head .ms-page{
+    font-family:'Nanum Myeongjo', serif;
+    font-size:11px;
+    color:var(--ink-soft);
+    border:1px solid var(--ink-soft);
+    padding:1px 8px;
+    border-radius:2px;
+  }
+
+  .ms-board{
+    background:
+      linear-gradient(#fbf6ea,#fbf6ea);
+    border:1.5px solid var(--red);
+    border-radius:2px;
+    padding:8px;
+    box-shadow:0 1px 0 rgba(255,255,255,.6) inset, 0 4px 10px rgba(40,30,10,.15);
+  }
+
+  .ms-grid{
+    display:grid;
+    grid-template-columns:repeat(20, 1fr);
+    background:var(--gridline-soft);
+    gap:1px;
+    border:1px solid var(--gridline);
+  }
+  .ms-cell{
+    aspect-ratio:1/1;
+    background:#fbf6ea;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Nanum Myeongjo', serif;
+    font-weight:700;
+    font-size:11.5px;
+    color:var(--ink);
+    position:relative;
+  }
+  /* 10칸 단위 중철 구분선 */
+  .ms-cell.fold{
+    box-shadow: inset -1px 0 0 var(--gridline), inset 1px 0 0 var(--gridline);
+  }
+  .ms-cell.blank{ color:transparent; }
+
+  .ms-foot-note{
+    margin-top:8px;
+    font-size:10.5px;
+    color:var(--ink-soft);
+    text-align:right;
+    padding-right:2px;
+    letter-spacing:.02em;
+  }
+
+  /* ---------- 하단 낙관/도장 ---------- */
+  .footer{
+    margin-top:18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-top:12px;
+    border-top:1px dashed rgba(90,70,40,.4);
+  }
+  .footer .diary-name{
+    font-size:11px;
+    color:var(--ink-soft);
+    letter-spacing:.05em;
+  }
+  .stamp-seal{
+    width:46px; height:46px;
+    border-radius:8px;
+    border:2px solid var(--red);
+    color:var(--red);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    line-height:1.05;
+    font-family:'Nanum Myeongjo', serif;
+    font-weight:800;
+    font-size:12px;
+    transform:rotate(-6deg);
+    opacity:.85;
+    mix-blend-mode:multiply;
+  }
+  .stamp-seal span{ font-size:9px; }
+
+  @media (max-width:360px){
+    .photo-frame{ font-size:24px; }
+    .title-wrap .title{ font-size:23px; }
+  }
+</style>
+
+<div class="stage">
+  <div class="sian-label"><span class="dot"></span><b>시안 5</b> · 뉴트로 원고지</div>
+
+  <div class="diary">
+
+    <!-- 헤더 -->
+    <div class="header">
+      <div class="date-weather">
+        <div class="date">2026. 7. 23. 목요일</div>
+        <div class="weather"><span class="icon">☀️</span>맑고 포근한 여름날</div>
+      </div>
+      <div class="dday-stamp">
+        <div class="txt">
+          <span class="small">태어난지</span>
+          <span class="big">D+128</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 제목 -->
+    <div class="title-wrap">
+      <span class="title">오늘은 첫 이유식</span>
+      <div class="title-sub">육 아 그 림 일 기</div>
+    </div>
+
+    <!-- 사진첩 -->
+    <div class="photobook">
+      <div class="photobook-head">
+        <span class="label">옛날 사진첩 · PHOTO ALBUM</span>
+        <span class="count">6컷</span>
+      </div>
+      <div class="photo-grid">
+        <div class="photo-cell">
+          <div class="photo-frame">👶</div>
+          <span class="corner tl"></span><span class="corner br"></span>
+          <div class="photo-cap">#1 아침</div>
+        </div>
+        <div class="photo-cell">
+          <div class="photo-frame">🥣</div>
+          <span class="corner tl"></span><span class="corner br"></span>
+          <div class="photo-cap">#2 첫숟갈</div>
+        </div>
+        <div class="photo-cell">
+          <div class="photo-frame">🍼</div>
+          <span class="corner tl"></span><span class="corner br"></span>
+          <div class="photo-cap">#3 우유도</div>
+        </div>
+        <div class="photo-cell">
+          <div class="photo-frame">🧸</div>
+          <span class="corner tl"></span><span class="corner br"></span>
+          <div class="photo-cap">#4 놀이시간</div>
+        </div>
+        <div class="photo-cell">
+          <div class="photo-frame">🐤</div>
+          <span class="corner tl"></span><span class="corner br"></span>
+          <div class="photo-cap">#5 산책</div>
+        </div>
+        <div class="photo-cell">
+          <div class="photo-frame">🌙</div>
+          <span class="corner tl"></span><span class="corner br"></span>
+          <div class="photo-cap">#6 낮잠</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 원고지 본문 -->
+    <div class="ms-section">
+      <div class="ms-head">
+        <span class="ms-title">일 기 · 200자 원고지</span>
+        <span class="ms-page">1</span>
+      </div>
+      <div class="ms-board">
+        <div class="ms-grid" id="msGrid"></div>
+      </div>
+      <div class="ms-foot-note">— 128일째, 엄마 씀</div>
+    </div>
+
+    <!-- 낙관 -->
+    <div class="footer">
+      <span class="diary-name">아기 그림일기 · No. 128</span>
+      <div class="stamp-seal">기록<span>일기</span></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // 200자 원고지(20칸 x 10줄) 자동 채움 — 문단 첫 칸은 관례대로 들여쓰기(빈칸)
+  (function(){
+    var text = "오늘은 아기 인생 첫 이유식을 먹은 날이다. 조그만 숟가락으로 쌀미음을 한입씩 떠먹여 주었는데, 처음엔 낯설어하더니 이내 오물오물 잘 받아먹었다. 다 먹고 나서 방긋 웃는 얼굴을 보니 나도 모르게 눈물이 핑 돌았다.";
+    var cols = 20, rows = 10;
+    var chars = [""].concat(text.split("")); // 첫 칸 들여쓰기
+    var grid = document.getElementById("msGrid");
+    for (var r = 0; r < rows; r++) {
+      for (var c = 0; c < cols; c++) {
+        var idx = r * cols + c;
+        var ch = chars[idx] || "";
+        var cell = document.createElement("div");
+        cell.className = "ms-cell" + (c === 9 || c === 10 ? " fold" : "") + (ch === "" ? " blank" : "");
+        cell.textContent = ch === "" ? "·" : ch;
+        grid.appendChild(cell);
+      }
+    }
+  })();
+</script>

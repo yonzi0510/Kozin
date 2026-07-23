@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>시안 2 · 미니멀 화이트 — 육아 그림일기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-canvas: #efeee9;
+    --bg-card: #fffdfa;
+    --ink: #222220;
+    --ink-soft: #57544d;
+    --ink-faint: #9c988e;
+    --line: #e4e0d7;
+    --line-strong: #d8d3c7;
+    --accent: #c96a4b;
+    --accent-tint: #f6e6de;
+    --cell: #f4f2ec;
+    --shadow: 0 30px 60px -25px rgba(40,35,25,0.25), 0 2px 8px rgba(40,35,25,0.06);
+  }
+
+  *{ box-sizing:border-box; }
+
+  html,body{
+    margin:0; padding:0;
+    background:var(--bg-canvas);
+    color:var(--ink);
+    font-family:"Gothic A1","Noto Sans KR",-apple-system,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  body{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:48px 16px 80px;
+  }
+
+  .stage{
+    width:100%;
+    max-width:430px;
+  }
+
+  /* 시안 라벨 */
+  .sian-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    justify-content:center;
+    margin-bottom:18px;
+    font-size:11px;
+    letter-spacing:0.16em;
+    color:var(--ink-faint);
+    font-weight:500;
+  }
+  .sian-label::before,
+  .sian-label::after{
+    content:"";
+    height:1px;
+    width:22px;
+    background:var(--line-strong);
+  }
+  .sian-label b{
+    color:var(--ink-soft);
+    font-weight:700;
+  }
+
+  /* 카드 */
+  .card{
+    background:var(--bg-card);
+    border-radius:26px;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    border:1px solid #fff;
+    position:relative;
+  }
+  .card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:26px;
+    box-shadow: inset 0 0 0 1px rgba(30,25,15,0.04);
+    pointer-events:none;
+  }
+
+  .inner{ padding:30px 26px 34px; }
+
+  /* 헤더 */
+  .diary-header{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    margin-bottom:22px;
+  }
+  .date-block{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .date-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:14.5px;
+    font-weight:700;
+    color:var(--ink);
+    letter-spacing:-0.01em;
+  }
+  .weather-icon{
+    font-size:16px;
+    filter:grayscale(0.1);
+  }
+  .day-name{
+    font-size:12px;
+    font-weight:500;
+    color:var(--ink-faint);
+    letter-spacing:0.02em;
+  }
+  .dday-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    padding:7px 12px;
+    border-radius:100px;
+    background:var(--accent-tint);
+    color:var(--accent);
+    font-size:11.5px;
+    font-weight:700;
+    letter-spacing:0.01em;
+    white-space:nowrap;
+  }
+  .dday-badge .dot{
+    width:5px; height:5px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+
+  /* 타이틀 */
+  .diary-title{
+    font-size:23px;
+    font-weight:900;
+    letter-spacing:-0.02em;
+    line-height:1.3;
+    color:var(--ink);
+    margin:0 0 6px;
+  }
+  .title-rule{
+    width:28px;
+    height:3px;
+    border-radius:2px;
+    background:var(--accent);
+    margin:0 0 22px;
+  }
+
+  /* 섹션 라벨 */
+  .section-tag{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:0.14em;
+    color:var(--ink-faint);
+    text-transform:uppercase;
+    margin:0 0 10px;
+  }
+  .section-tag span.n{
+    color:var(--accent);
+  }
+
+  /* 사진 그리드 */
+  .photo-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:3px;
+    border-radius:14px;
+    overflow:hidden;
+    margin-bottom:8px;
+  }
+  .photo-cell{
+    position:relative;
+    aspect-ratio:1/1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:26px;
+  }
+  .photo-cell .idx{
+    position:absolute;
+    left:8px;
+    bottom:7px;
+    font-size:9.5px;
+    font-weight:700;
+    color:rgba(255,255,255,0.85);
+    letter-spacing:0.02em;
+    font-family:"Gothic A1",sans-serif;
+  }
+  .photo-cell.p1{ background:linear-gradient(150deg,#d8d2c4,#c7c0ad); }
+  .photo-cell.p2{ background:linear-gradient(150deg,#e7ded0,#d3c8b4); }
+  .photo-cell.p3{ background:linear-gradient(150deg,#cfc8bd,#b8afa0); }
+  .photo-cell.p4{ background:linear-gradient(150deg,#e2dccf,#cbc2af); }
+  .photo-cell.p5{ background:linear-gradient(150deg,#d3ccbf,#bdb4a2); }
+  .photo-cell.p6{ background:linear-gradient(150deg,#ded6c6,#c6bca6); }
+
+  .photo-caption{
+    display:flex;
+    justify-content:space-between;
+    font-size:11px;
+    color:var(--ink-faint);
+    margin:0 0 26px;
+    padding:0 2px;
+  }
+  .photo-caption b{ color:var(--ink-soft); font-weight:600; }
+
+  hr.divider{
+    border:none;
+    height:1px;
+    background:var(--line);
+    margin:0 0 24px;
+  }
+
+  /* 원고지 본문 */
+  .manuscript-wrap{
+    border-radius:12px;
+    padding:16px 14px;
+    background:#fffefc;
+    border:1px solid var(--line);
+    margin-bottom:22px;
+  }
+  .manuscript{
+    display:grid;
+    grid-template-columns:repeat(12, 1fr);
+    border-top:1px solid var(--line);
+    border-left:1px solid var(--line);
+  }
+  .manuscript .cell{
+    aspect-ratio:1/1;
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12.5px;
+    font-weight:500;
+    color:#3a3733;
+    font-family:"Noto Serif KR","Gothic A1",serif;
+  }
+
+  /* 푸터 */
+  .diary-footer{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-top:4px;
+  }
+  .mood-tags{
+    display:flex;
+    gap:6px;
+  }
+  .mood-tag{
+    font-size:11px;
+    font-weight:600;
+    color:var(--ink-soft);
+    background:var(--cell);
+    padding:6px 11px;
+    border-radius:100px;
+  }
+  .page-no{
+    font-size:11px;
+    color:var(--ink-faint);
+    font-weight:600;
+    letter-spacing:0.04em;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg-canvas:#1c1b19;
+      --bg-card:#242220;
+      --ink:#f1efe9;
+      --ink-soft:#c9c5ba;
+      --ink-faint:#8b877c;
+      --line:#3a372f;
+      --line-strong:#464236;
+      --accent:#e08765;
+      --accent-tint:#3a2c24;
+      --cell:#2c2a26;
+      --shadow: 0 30px 60px -25px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .card{ border-color:#2c2a26; }
+    .card::before{ box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05); }
+    .manuscript-wrap{ background:#221f1c; }
+    .manuscript .cell{ color:#ddd8cc; }
+  }
+  :root[data-theme="dark"]{
+    --bg-canvas:#1c1b19;
+    --bg-card:#242220;
+    --ink:#f1efe9;
+    --ink-soft:#c9c5ba;
+    --ink-faint:#8b877c;
+    --line:#3a372f;
+    --line-strong:#464236;
+    --accent:#e08765;
+    --accent-tint:#3a2c24;
+    --cell:#2c2a26;
+    --shadow: 0 30px 60px -25px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.3);
+  }
+  :root[data-theme="dark"] .card{ border-color:#2c2a26; }
+  :root[data-theme="dark"] .card::before{ box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05); }
+  :root[data-theme="dark"] .manuscript-wrap{ background:#221f1c; }
+  :root[data-theme="dark"] .manuscript .cell{ color:#ddd8cc; }
+  :root[data-theme="light"]{
+    --bg-canvas: #efeee9;
+    --bg-card: #fffdfa;
+  }
+</style>
+</head>
+<body>
+
+  <div class="stage">
+
+    <div class="sian-label"><b>시안 2</b> · 미니멀 화이트</div>
+
+    <div class="card">
+      <div class="inner">
+
+        <!-- 헤더 -->
+        <div class="diary-header">
+          <div class="date-block">
+            <div class="date-row">
+              <span>2026. 7. 23.</span>
+              <span class="weather-icon">☀️</span>
+            </div>
+            <span class="day-name">목요일 · 맑음</span>
+          </div>
+          <div class="dday-badge"><span class="dot"></span>태어난지 D+128</div>
+        </div>
+
+        <!-- 타이틀 -->
+        <h1 class="diary-title">오늘은 첫 이유식</h1>
+        <div class="title-rule"></div>
+
+        <!-- 사진 영역 -->
+        <div class="section-tag"><span class="n">01</span> 오늘의 순간</div>
+        <div class="photo-grid">
+          <div class="photo-cell p1">👶<span class="idx">1</span></div>
+          <div class="photo-cell p2">🥣<span class="idx">2</span></div>
+          <div class="photo-cell p3">🍼<span class="idx">3</span></div>
+          <div class="photo-cell p4">🧸<span class="idx">4</span></div>
+          <div class="photo-cell p5">🌙<span class="idx">5</span></div>
+          <div class="photo-cell p6">🐤<span class="idx">6</span></div>
+        </div>
+        <div class="photo-caption">
+          <span><b>사진 6장</b> 첨부됨</span>
+          <span>10:24 AM 촬영</span>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- 본문 (원고지) -->
+        <div class="section-tag"><span class="n">02</span> 오늘의 기록</div>
+        <div class="manuscript-wrap">
+          <div id="manuscript" class="manuscript"></div>
+        </div>
+
+        <!-- 푸터 -->
+        <div class="diary-footer">
+          <div class="mood-tags">
+            <span class="mood-tag">😊 사랑스러움</span>
+            <span class="mood-tag">🥣 이유식</span>
+          </div>
+          <span class="page-no">P. 014</span>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+<script>
+  // 원고지(manuscript paper) 그리드 생성 — 한 글자씩 칸에 배치
+  (function(){
+    var cols = 12;
+    var paragraphs = [
+      "오늘 처음으로 이유식을 먹었다. 조그맣게 오물오물거리는 모습이 어찌나 사랑스럽던지.",
+      "숟가락을 요리조리 피하다가도 한 입 삼키고는 배시시 웃어서 나도 따라 웃었다.",
+      "내일은 또 어떤 표정을 보여줄까, 벌써부터 기다려진다."
+    ];
+    var container = document.getElementById("manuscript");
+    container.style.gridTemplateColumns = "repeat(" + cols + ", 1fr)";
+
+    var frag = document.createDocumentFragment();
+
+    paragraphs.forEach(function(p){
+      // 문단 시작 들여쓰기 (원고지 관례상 첫 칸 비움)
+      var chars = [" "].concat(p.split(""));
+      chars.forEach(function(ch){
+        var cell = document.createElement("div");
+        cell.className = "cell";
+        cell.textContent = ch === " " ? "" : ch;
+        frag.appendChild(cell);
+      });
+      // 문단 끝나면 남은 칸을 채워 다음 문단이 새 줄에서 시작되도록 함
+      var used = chars.length % cols;
+      if(used !== 0){
+        var pad = cols - used;
+        for(var i=0;i<pad;i++){
+          var blank = document.createElement("div");
+          blank.className = "cell";
+          frag.appendChild(blank);
+        }
+      }
+    });
+
+    container.appendChild(frag);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,409 @@
+<title>시안 1 · 파스텔 크레용 육아일기</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Gaegu:wght@400;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --cream:#fbf3e6;
+    --cream-deep:#f5e9d6;
+    --paper:#fffaf1;
+    --pink:#ffd3e2;
+    --pink-deep:#ffb8d1;
+    --mint:#c9f2df;
+    --mint-deep:#a9e8c9;
+    --yellow:#fff0b3;
+    --yellow-deep:#ffe28a;
+    --lavender:#e3d6f7;
+    --lavender-deep:#cdb8ef;
+    --sky:#cfeaff;
+    --ink:#6b5744;
+    --ink-soft:#8a7561;
+    --line:#e3c9a3;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html,body{
+    margin:0; padding:0;
+    min-height:100%;
+    background:
+      radial-gradient(circle at 8% 12%, rgba(255,214,232,.35), transparent 40%),
+      radial-gradient(circle at 92% 18%, rgba(200,244,224,.35), transparent 42%),
+      radial-gradient(circle at 15% 88%, rgba(224,212,247,.32), transparent 40%),
+      radial-gradient(circle at 85% 90%, rgba(255,243,176,.35), transparent 40%),
+      var(--cream);
+    font-family:'Gaegu', sans-serif;
+    color:var(--ink);
+  }
+
+  @media (prefers-color-scheme: dark){
+    html,body{
+      background:
+        radial-gradient(circle at 8% 12%, rgba(255,214,232,.12), transparent 40%),
+        radial-gradient(circle at 92% 18%, rgba(200,244,224,.12), transparent 42%),
+        radial-gradient(circle at 15% 88%, rgba(224,212,247,.1), transparent 40%),
+        radial-gradient(circle at 85% 90%, rgba(255,243,176,.12), transparent 40%),
+        #2a2320;
+      color:#f1e6d6;
+    }
+  }
+
+  .page-wrap{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:28px 14px 60px;
+    position:relative;
+  }
+
+  /* ---------- 시안 라벨 ---------- */
+  .sian-label{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:var(--paper);
+    border:2px dashed var(--pink-deep);
+    color:var(--ink-soft);
+    font-family:'Jua', sans-serif;
+    font-size:13px;
+    padding:6px 14px;
+    border-radius:999px;
+    margin-bottom:18px;
+    box-shadow:0 3px 0 rgba(0,0,0,.05);
+    transform:rotate(-1.2deg);
+  }
+  .sian-label b{ color:#e0568a; font-size:13px; }
+
+  /* ---------- 배경 낙서 장식 ---------- */
+  .doodle{
+    position:absolute;
+    font-size:22px;
+    opacity:.55;
+    filter:saturate(1.1);
+    pointer-events:none;
+    user-select:none;
+  }
+  @media (max-width:600px){ .doodle{ display:none; } }
+
+  /* ---------- 다이어리 캔버스 ---------- */
+  .diary-page{
+    width:100%;
+    max-width:430px;
+    background:var(--paper);
+    border-radius:32px;
+    padding:22px 20px 28px;
+    position:relative;
+    box-shadow:
+      0 2px 0 rgba(255,255,255,.6) inset,
+      0 18px 40px -14px rgba(120,90,60,.35),
+      0 4px 0 rgba(200,160,120,.25);
+    border:3px solid var(--line);
+    overflow:hidden;
+  }
+
+  /* 종이 질감 (은은한 크레용 얼룩) */
+  .diary-page::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      radial-gradient(circle at 18% 22%, rgba(255,190,220,.18) 0, transparent 6%),
+      radial-gradient(circle at 78% 14%, rgba(170,225,255,.16) 0, transparent 7%),
+      radial-gradient(circle at 68% 82%, rgba(255,230,160,.18) 0, transparent 7%),
+      radial-gradient(circle at 10% 78%, rgba(200,240,215,.18) 0, transparent 6%);
+    pointer-events:none;
+  }
+
+  /* 크레용 테두리 느낌의 컬러 프레임 라인 */
+  .crayon-frame{
+    position:absolute; inset:8px;
+    border-radius:26px;
+    border:2px solid rgba(255,184,209,.55);
+    pointer-events:none;
+  }
+
+  /* ---------- 헤더 ---------- */
+  .diary-header{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    margin-bottom:14px;
+    z-index:1;
+  }
+  .date-weather{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+  }
+  .date-text{
+    font-family:'Jua', sans-serif;
+    font-size:16px;
+    color:var(--ink);
+  }
+  .weather-row{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .weather-icon{ font-size:16px; }
+
+  .dday-badge{
+    font-family:'Jua', sans-serif;
+    font-size:13px;
+    background:linear-gradient(135deg, var(--pink), var(--lavender));
+    color:#7a4a63;
+    padding:8px 13px;
+    border-radius:16px 16px 16px 4px;
+    box-shadow:0 3px 0 rgba(220,170,190,.5);
+    white-space:nowrap;
+    transform:rotate(2deg);
+  }
+
+  /* ---------- 제목 ---------- */
+  .diary-title{
+    position:relative;
+    z-index:1;
+    font-family:'Jua', sans-serif;
+    font-size:23px;
+    color:#5a4634;
+    margin:6px 0 18px;
+    text-decoration:underline;
+    text-decoration-style:wavy;
+    text-decoration-color:var(--mint-deep);
+    text-underline-offset:6px;
+    text-decoration-thickness:2px;
+  }
+
+  /* ---------- 사진 콜라주 ---------- */
+  .photo-section{
+    position:relative;
+    z-index:1;
+    margin-bottom:20px;
+  }
+  .photo-grid{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 72px 72px 62px;
+    gap:8px;
+    position:relative;
+  }
+  .photo-cell{
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:26px;
+    position:relative;
+    box-shadow:0 3px 0 rgba(120,90,60,.12), 0 6px 14px -6px rgba(120,90,60,.25);
+    border:2px solid rgba(255,255,255,.7);
+  }
+  .p1{
+    grid-column:1 / 3; grid-row:1 / 3;
+    background:linear-gradient(160deg, var(--pink), var(--pink-deep));
+    font-size:38px;
+    border-radius:22px 12px 22px 12px;
+    transform:rotate(-1.5deg);
+  }
+  .p2{
+    grid-column:3 / 4; grid-row:1 / 2;
+    background:linear-gradient(160deg, var(--mint), var(--mint-deep));
+    transform:rotate(2deg);
+  }
+  .p3{
+    grid-column:4 / 5; grid-row:1 / 2;
+    background:linear-gradient(160deg, var(--sky), #a9d6f5);
+    transform:rotate(-2deg);
+  }
+  .p4{
+    grid-column:3 / 5; grid-row:2 / 3;
+    background:linear-gradient(160deg, var(--yellow), var(--yellow-deep));
+    transform:rotate(1deg);
+  }
+  .p5{
+    grid-column:1 / 2; grid-row:3 / 4;
+    background:linear-gradient(160deg, var(--lavender), var(--lavender-deep));
+    transform:rotate(2deg);
+  }
+  .p6{
+    grid-column:2 / 5; grid-row:3 / 4;
+    background:linear-gradient(160deg, #ffe3ee, var(--mint));
+    transform:rotate(-1deg);
+  }
+
+  /* 폴라로이드 느낌 프레임 (스티커 장식1) */
+  .p1::after{
+    content:"우리 아기";
+    position:absolute;
+    bottom:-9px; left:50%;
+    transform:translateX(-50%) rotate(0deg);
+    background:#fff;
+    color:#c76b93;
+    font-family:'Nanum Pen Script', cursive;
+    font-size:15px;
+    padding:1px 10px;
+    border-radius:8px;
+    box-shadow:0 2px 4px rgba(0,0,0,.12);
+    white-space:nowrap;
+  }
+
+  /* 와시테이프 스티커 장식2 */
+  .washi{
+    position:absolute;
+    top:-10px; right:14px;
+    width:64px; height:22px;
+    background:repeating-linear-gradient(45deg, var(--lavender-deep) 0 8px, var(--lavender) 8px 16px);
+    opacity:.9;
+    transform:rotate(8deg);
+    border-radius:3px;
+    box-shadow:0 2px 3px rgba(0,0,0,.1);
+    z-index:2;
+  }
+  .heart-sticker{
+    position:absolute;
+    top:-14px; left:10px;
+    font-size:22px;
+    transform:rotate(-12deg);
+    z-index:2;
+    filter:drop-shadow(0 2px 2px rgba(0,0,0,.15));
+  }
+
+  /* ---------- 원고지 본문 ---------- */
+  .journal-caption{
+    font-family:'Jua', sans-serif;
+    font-size:13px;
+    color:var(--ink-soft);
+    margin:0 0 8px 2px;
+    position:relative; z-index:1;
+  }
+  .manuscript{
+    position:relative;
+    z-index:1;
+    background:var(--cream);
+    border:2px solid var(--line);
+    border-radius:16px;
+    padding:14px;
+  }
+  .m-row{
+    display:grid;
+    grid-template-columns: repeat(11, 1fr);
+    gap:0;
+    margin-bottom:2px;
+  }
+  .m-cell{
+    aspect-ratio:1/1;
+    border:1px solid rgba(180,140,90,.35);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Gaegu', sans-serif;
+    font-weight:700;
+    font-size:14px;
+    color:#5a4634;
+    background:rgba(255,255,255,.55);
+  }
+  .m-cell.empty{ background:transparent; border-color:rgba(180,140,90,.18); }
+
+  .signature{
+    margin-top:10px;
+    text-align:right;
+    font-family:'Nanum Pen Script', cursive;
+    font-size:20px;
+    color:#c76b93;
+    position:relative; z-index:1;
+  }
+
+  footer.hint{
+    margin-top:22px;
+    font-size:12px;
+    color:var(--ink-soft);
+    text-align:center;
+    opacity:.7;
+  }
+
+  @media (min-width:640px){
+    .diary-page{ padding:28px 26px 34px; }
+  }
+</style>
+
+<div class="page-wrap">
+  <span class="doodle" style="top:6%; left:6%;">🖍️</span>
+  <span class="doodle" style="top:10%; right:8%;">⭐</span>
+  <span class="doodle" style="bottom:14%; left:9%;">🧸</span>
+  <span class="doodle" style="bottom:10%; right:7%;">💛</span>
+
+  <div class="sian-label">시안 1 <b>·</b> 파스텔 크레용</div>
+
+  <div class="diary-page">
+    <div class="crayon-frame"></div>
+
+    <div class="diary-header">
+      <div class="date-weather">
+        <div class="date-text">2026. 7. 23. 목요일</div>
+        <div class="weather-row"><span class="weather-icon">☀️</span> 맑고 포근한 날</div>
+      </div>
+      <div class="dday-badge">태어난지 D+128</div>
+    </div>
+
+    <h1 class="diary-title">오늘은 첫 이유식 🍚</h1>
+
+    <div class="photo-section">
+      <div class="heart-sticker">💗</div>
+      <div class="washi"></div>
+      <div class="photo-grid">
+        <div class="photo-cell p1">👶</div>
+        <div class="photo-cell p2">🥣</div>
+        <div class="photo-cell p3">🍼</div>
+        <div class="photo-cell p4">🧸</div>
+        <div class="photo-cell p5">🌙</div>
+        <div class="photo-cell p6">🐤</div>
+      </div>
+    </div>
+
+    <p class="journal-caption">오늘의 일기 📝</p>
+    <div class="manuscript" id="manuscript"></div>
+
+    <div class="signature">- 엄마 씀 -</div>
+  </div>
+
+  <footer class="hint">파스텔 크레용 테마 · 육아 그림일기 디자인 시안</footer>
+</div>
+
+<script>
+  // 원고지(manuscript) 그리드를 문장으로 자동 채우기
+  const lines = [
+    "오늘 우리 아기가 처음으로 이유식을",
+    "먹었다. 호박죽을 오물오물 잘 먹는",
+    "모습이 너무 예뻤다."
+  ];
+  const cols = 11;
+  const root = document.getElementById('manuscript');
+
+  lines.forEach(line => {
+    const chars = Array.from(line);
+    const rowsNeeded = Math.max(1, Math.ceil(chars.length / cols));
+    for (let r = 0; r < rowsNeeded; r++){
+      const rowEl = document.createElement('div');
+      rowEl.className = 'm-row';
+      for (let c = 0; c < cols; c++){
+        const idx = r * cols + c;
+        const cell = document.createElement('div');
+        const ch = chars[idx];
+        if (ch === undefined || ch === ' '){
+          cell.className = 'm-cell empty';
+          cell.textContent = '';
+        } else {
+          cell.className = 'm-cell';
+          cell.textContent = ch;
+        }
+        rowEl.appendChild(cell);
+      }
+      root.appendChild(rowEl);
+    }
+  });
+</script>

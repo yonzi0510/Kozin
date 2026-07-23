@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>아기 그림일기 · 디자인 시안 5종</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Gaegu','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  background:linear-gradient(160deg,#fdeef0,#eef7f2 55%,#fff8ec);color:#4a4038;min-height:100vh;padding:0 0 60px;}
+.hero{text-align:center;padding:44px 20px 24px;}
+.hero .kicker{display:inline-block;background:#fff;border:1px solid #eadfce;border-radius:999px;
+  padding:6px 16px;font-weight:700;font-size:14px;color:#8b7f72;margin-bottom:16px;}
+.hero h1{font-family:'Jua';font-size:32px;line-height:1.25;}
+.hero h1 span{color:#f2789b;}
+.hero p{margin-top:12px;color:#8b7f72;font-size:15px;line-height:1.6;}
+.hero .meta{margin-top:14px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+.hero .meta b{background:#fff;border:1px solid #eadfce;border-radius:10px;padding:5px 12px;font-size:13px;color:#7a5bb0;font-weight:700;}
+
+.grid{max-width:1180px;margin:0 auto;padding:10px 18px;display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;}
+.card{background:#fffdf7;border-radius:22px;box-shadow:0 10px 30px rgba(120,100,80,.14);
+  overflow:hidden;border:1px solid #f0e6d6;display:flex;flex-direction:column;transition:.2s;}
+.card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(120,100,80,.2);}
+.preview{position:relative;height:340px;overflow:hidden;background:#f6efe2;border-bottom:1px solid #f0e6d6;}
+.preview .scaler{position:absolute;top:0;left:50%;width:460px;height:970px;
+  transform:translateX(-50%) scale(.72);transform-origin:top center;pointer-events:none;}
+.preview iframe{width:460px;height:1340px;border:0;background:#fff;}
+.preview .tag{position:absolute;top:12px;left:12px;z-index:2;background:rgba(74,64,56,.85);color:#fff;
+  font-family:'Jua';font-size:13px;padding:4px 12px;border-radius:999px;}
+.preview .open{position:absolute;inset:0;z-index:3;display:flex;align-items:flex-end;justify-content:center;
+  padding-bottom:14px;opacity:0;transition:.2s;background:linear-gradient(transparent 60%,rgba(60,50,40,.35));}
+.preview:hover .open{opacity:1;}
+.preview .open a{background:#fff;color:#4a4038;font-family:'Jua';font-size:14px;padding:8px 18px;border-radius:999px;
+  text-decoration:none;box-shadow:0 4px 12px rgba(0,0,0,.2);}
+.card .info{padding:16px 18px 18px;}
+.card .info h3{font-family:'Jua';font-size:19px;display:flex;align-items:center;gap:8px;}
+.card .info .num{background:#f2789b;color:#fff;width:24px;height:24px;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;font-size:13px;}
+.card .info p{margin-top:8px;color:#8b7f72;font-size:14px;line-height:1.55;}
+.card .info .full{display:inline-block;margin-top:12px;font-weight:700;color:#7a5bb0;text-decoration:none;font-size:14px;}
+
+.cta{max-width:1180px;margin:34px auto 0;padding:0 18px;}
+.cta .box{background:linear-gradient(135deg,#f7b8c4,#a8d8c8);border-radius:24px;padding:30px 26px;text-align:center;color:#fff;
+  box-shadow:0 12px 30px rgba(160,140,120,.25);}
+.cta h2{font-family:'Jua';font-size:24px;}
+.cta p{margin-top:8px;font-size:15px;opacity:.95;}
+.cta a{display:inline-block;margin-top:16px;background:#fff;color:#4a4038;font-family:'Jua';font-size:16px;
+  padding:12px 28px;border-radius:14px;text-decoration:none;box-shadow:0 6px 16px rgba(0,0,0,.15);}
+footer{text-align:center;color:#a99e90;font-size:13px;margin-top:36px;}
+</style>
+</head>
+<body>
+<div class="hero">
+  <span class="kicker">🎨 디자인팀 산출물</span>
+  <h1>아기 <span>그림일기</span> · 디자인 시안 5종</h1>
+  <p>그림일기 포맷의 육아 기록 앱 — 날짜·날씨·디데이 헤더, 제목, 사진 4~8장, 원고지 본문.<br>같은 콘텐츠를 5가지 무드로 디자인했어요. 마음에 드는 시안을 골라주세요.</p>
+  <div class="meta"><b>모바일 우선</b><b>사진 콜라주</b><b>원고지 레이아웃</b><b>디데이 뱃지</b></div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<div class="cta">
+  <div class="box">
+    <h2>🧩 개발팀 산출물 — 사진 레이아웃 엔진</h2>
+    <p>4~8장 자동/수동 배치 · AI 자동배치 · 사진 꾸미기 · 원고지 타이핑&amp;펜슬까지 실제로 동작해요.</p>
+    <a href="../index.html">실제 앱 체험하기 →</a>
+  </div>
+</div>
+
+<footer>아기 그림일기 프로젝트 · 디자인 5종 + 동작 프로토타입</footer>
+
+<script>
+const SIANS=[
+  {n:1,file:'sian1.html',name:'파스텔 크레용',tag:'따뜻·아기자기',
+   desc:'크림 종이 위 파스텔 크레용 감성. 벤토 콜라주와 물결 밑줄, 손그림 느낌의 포근한 무드.'},
+  {n:2,file:'sian2.html',name:'미니멀 화이트',tag:'깔끔·모던',
+   desc:'넉넉한 여백과 헤어라인. 균일 모듈 그리드와 절제된 타이포. 라이트/다크 대응.'},
+  {n:3,file:'sian3.html',name:'크라프트 스크랩북',tag:'아날로그·빈티지',
+   desc:'크라프트지에 폴라로이드·마스킹테이프·압정·도장 콜라주. 손으로 꾸민 다이어리 감성.'},
+  {n:4,file:'sian4.html',name:'수채화 감성',tag:'서정·잔잔',
+   desc:'살구·하늘·연보라 수채 번짐 배경. 모서리가 부드럽게 사라지는 사진과 명조 타이포.'},
+  {n:5,file:'sian5.html',name:'뉴트로 원고지',tag:'복고·정겨움',
+   desc:'진짜 200자 원고지 격자와 도장 뱃지. 옛날 사진첩 느낌의 뉴트로 무드.'},
+];
+document.getElementById('grid').innerHTML=SIANS.map(s=>`
+  <div class="card">
+    <div class="preview">
+      <span class="tag">시안 ${s.n}</span>
+      <div class="scaler"><iframe src="${s.file}" loading="lazy" scrolling="no" title="${s.name}"></iframe></div>
+      <div class="open"><a href="${s.file}" target="_blank" rel="noopener">전체 화면으로 보기 ↗</a></div>
+    </div>
+    <div class="info">
+      <h3><span class="num">${s.n}</span>${s.name}</h3>
+      <p>${s.desc}</p>
+      <a class="full" href="${s.file}" target="_blank" rel="noopener">🔍 ${s.tag} · 자세히 보기</a>
+    </div>
+  </div>`).join('');
+</script>
+</body>
+</html>

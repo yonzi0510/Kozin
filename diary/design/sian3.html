@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>시안 3 · 크라프트 스크랩북</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Nanum+Pen+Script&family=Special+Elite&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --kraft-1:#c9a876;
+    --kraft-2:#b8935f;
+    --kraft-3:#a9824f;
+    --paper:#faf3e3;
+    --paper-edge:#eadfc4;
+    --ink:#5b4630;
+    --ink-soft:#7a6349;
+    --tape:#f3e2b8;
+    --tape-pink:#f4c9c9;
+    --tape-mint:#c9e4d9;
+    --stamp-red:#b5533d;
+  }
+
+  *{box-sizing:border-box;}
+
+  html,body{
+    margin:0;
+    padding:0;
+    min-height:100%;
+  }
+
+  body{
+    font-family:'Gowun Batang', serif;
+    color:var(--ink);
+    background-color:var(--kraft-2);
+    background-image:
+      radial-gradient(circle at 20% 15%, rgba(255,255,255,0.10) 0, transparent 45%),
+      radial-gradient(circle at 80% 85%, rgba(0,0,0,0.10) 0, transparent 50%),
+      repeating-linear-gradient(115deg, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 1px, transparent 1px, transparent 4px),
+      repeating-linear-gradient(25deg, rgba(0,0,0,0.035) 0px, rgba(0,0,0,0.035) 1px, transparent 1px, transparent 5px),
+      linear-gradient(155deg, var(--kraft-1), var(--kraft-2) 45%, var(--kraft-3) 100%);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    padding:36px 14px 60px;
+  }
+
+  /* ---------- outer wrap / sian label ---------- */
+  .wrap{
+    width:100%;
+    max-width:430px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+  }
+
+  .sian-tag{
+    align-self:flex-start;
+    margin-left:6px;
+    transform:rotate(-3deg);
+    background:linear-gradient(180deg,#efe3c6,#e2d2a8);
+    border:1px solid rgba(90,65,35,0.35);
+    color:var(--ink);
+    font-family:'Special Elite', monospace;
+    font-size:11.5px;
+    letter-spacing:0.5px;
+    padding:5px 12px 5px 10px;
+    border-radius:2px 8px 2px 8px;
+    box-shadow:1px 2px 3px rgba(0,0,0,0.25), inset 0 0 0 1px rgba(255,255,255,0.25);
+    position:relative;
+  }
+  .sian-tag::before{
+    content:"";
+    position:absolute;
+    left:-4px; top:50%;
+    width:8px; height:8px;
+    background:radial-gradient(circle at 35% 35%, #fff, #cbb987 70%);
+    border-radius:50%;
+    transform:translateY(-50%);
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,0.25);
+  }
+
+  /* ---------- diary page ---------- */
+  .diary-page{
+    position:relative;
+    width:100%;
+    background:
+      radial-gradient(circle at 8% 12%, rgba(120,90,50,0.05), transparent 40%),
+      radial-gradient(circle at 92% 90%, rgba(120,90,50,0.06), transparent 45%),
+      repeating-linear-gradient(0deg, rgba(120,90,50,0.02) 0px, rgba(120,90,50,0.02) 2px, transparent 2px, transparent 4px),
+      var(--paper);
+    border-radius:6px;
+    box-shadow:
+      0 2px 0 rgba(255,255,255,0.5) inset,
+      0 18px 40px rgba(35,22,10,0.35),
+      0 4px 10px rgba(35,22,10,0.25);
+    padding:20px 18px 26px;
+    transform:rotate(-0.6deg);
+  }
+
+  .diary-page::after{
+    /* deckled paper edge illusion */
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:6px;
+    box-shadow:inset 0 0 0 1px rgba(120,90,50,0.15);
+    pointer-events:none;
+  }
+
+  /* corner tape on the whole page */
+  .page-tape{
+    position:absolute;
+    width:74px; height:26px;
+    background:linear-gradient(180deg, var(--tape), #e8d59b);
+    opacity:0.85;
+    box-shadow:0 1px 2px rgba(0,0,0,0.2);
+  }
+  .page-tape.tl{ top:-12px; left:18px; transform:rotate(-8deg); }
+  .page-tape.tr{ top:-10px; right:16px; transform:rotate(6deg); background:linear-gradient(180deg, var(--tape-mint), #b7d9cc);}
+
+  /* ---------- header ---------- */
+  .header-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    margin-top:10px;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+  }
+
+  .date-badge{
+    font-family:'Special Elite', monospace;
+    font-size:13.5px;
+    color:var(--ink);
+    background:#fff9ec;
+    border:1px dashed var(--kraft-3);
+    padding:5px 10px;
+    border-radius:3px;
+    transform:rotate(-1.5deg);
+    box-shadow:1px 2px 3px rgba(0,0,0,0.12);
+    white-space:nowrap;
+  }
+
+  .weather{
+    font-size:26px;
+    filter:drop-shadow(1px 2px 1px rgba(0,0,0,0.15));
+    transform:rotate(6deg);
+  }
+
+  .dday-badge{
+    position:relative;
+    font-family:'Special Elite', monospace;
+    font-size:11.5px;
+    color:#fff7ef;
+    background:var(--stamp-red);
+    padding:7px 12px;
+    border-radius:50%/50%;
+    border:2px solid rgba(255,247,239,0.65);
+    box-shadow:0 2px 4px rgba(0,0,0,0.3), inset 0 0 0 2px rgba(0,0,0,0.08);
+    transform:rotate(-9deg);
+    text-align:center;
+    line-height:1.25;
+    white-space:nowrap;
+  }
+  .dday-badge b{
+    display:block;
+    font-size:14px;
+    font-family:'Gamja Flower', cursive;
+  }
+
+  /* ---------- title ---------- */
+  .title-wrap{
+    position:relative;
+    margin:6px 4px 20px;
+    text-align:center;
+  }
+  .title-tape{
+    position:absolute;
+    top:-10px; left:50%;
+    transform:translateX(-50%) rotate(-2deg);
+    width:110px; height:22px;
+    background:linear-gradient(180deg, var(--tape-pink), #e7b3b3);
+    opacity:0.85;
+    box-shadow:0 1px 2px rgba(0,0,0,0.18);
+  }
+  .title{
+    display:inline-block;
+    font-family:'Gamja Flower', cursive;
+    font-size:34px;
+    color:#4a3620;
+    padding:10px 6px 4px;
+    transform:rotate(-1deg);
+    text-shadow:1px 1px 0 rgba(255,255,255,0.5);
+  }
+  .title-underline{
+    width:60%;
+    height:6px;
+    margin:-4px auto 0;
+    background:repeating-linear-gradient(90deg, #d98b8b 0 10px, transparent 10px 16px);
+    opacity:0.6;
+    border-radius:3px;
+  }
+
+  /* ---------- photo collage ---------- */
+  .collage{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:16px 10px;
+    padding:6px 2px 10px;
+    margin-bottom:6px;
+  }
+
+  .photo{
+    position:relative;
+    background:#fffdf8;
+    padding:8px 8px 20px;
+    border-radius:2px;
+    box-shadow:0 6px 10px rgba(30,20,10,0.28), 0 1px 0 rgba(255,255,255,0.6) inset;
+  }
+  .photo:nth-child(1){ transform:rotate(-6deg); margin-top:2px; }
+  .photo:nth-child(2){ transform:rotate(3deg);  margin-top:10px; }
+  .photo:nth-child(3){ transform:rotate(-3deg); margin-top:-4px; }
+  .photo:nth-child(4){ transform:rotate(5deg);  margin-top:-6px; }
+  .photo:nth-child(5){ transform:rotate(-4deg); margin-top:6px; }
+  .photo:nth-child(6){ transform:rotate(2deg);  margin-top:0px; }
+
+  .photo .frame{
+    width:100%;
+    aspect-ratio:1/1;
+    border-radius:1px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,0.06);
+  }
+  .photo:nth-child(1) .frame{ background:linear-gradient(160deg,#ffe0c2,#ffc499); }
+  .photo:nth-child(2) .frame{ background:linear-gradient(160deg,#dcefe6,#a9d6c2); }
+  .photo:nth-child(3) .frame{ background:linear-gradient(160deg,#fde3ea,#f4b7c9); }
+  .photo:nth-child(4) .frame{ background:linear-gradient(160deg,#e7e0f7,#c3b6ec); }
+  .photo:nth-child(5) .frame{ background:linear-gradient(160deg,#d9e6f5,#a9c5e8); }
+  .photo:nth-child(6) .frame{ background:linear-gradient(160deg,#fff3c9,#f6d987); }
+
+  .photo .cap{
+    position:absolute;
+    left:0; right:0; bottom:4px;
+    text-align:center;
+    font-family:'Nanum Pen Script', cursive;
+    font-size:15px;
+    color:var(--ink-soft);
+  }
+
+  .photo .tape-bit{
+    position:absolute;
+    top:-9px; left:50%;
+    transform:translateX(-50%) rotate(var(--tr,0deg));
+    width:34px; height:14px;
+    opacity:0.8;
+    box-shadow:0 1px 1px rgba(0,0,0,0.15);
+  }
+  .photo:nth-child(1) .tape-bit{ --tr:5deg; background:var(--tape); left:30%; }
+  .photo:nth-child(2) .tape-bit{ --tr:-6deg; background:var(--tape-mint); }
+  .photo:nth-child(3) .tape-bit{ --tr:4deg; background:var(--tape-pink); left:65%; }
+  .photo:nth-child(4) .tape-bit{ --tr:-3deg; background:var(--tape); }
+  .photo:nth-child(5) .tape-bit{ --tr:6deg; background:var(--tape-pink); left:35%; }
+  .photo:nth-child(6) .tape-bit{ --tr:-5deg; background:var(--tape-mint); left:60%; }
+
+  /* pin on one photo for extra scrapbook feel */
+  .photo.pinned::before{
+    content:"📌";
+    position:absolute;
+    top:-14px; right:-6px;
+    font-size:18px;
+    transform:rotate(20deg);
+    filter:drop-shadow(1px 2px 1px rgba(0,0,0,0.3));
+  }
+
+  /* ---------- body / manuscript ---------- */
+  .note-wrap{
+    position:relative;
+    margin:22px 2px 10px;
+    transform:rotate(0.5deg);
+  }
+  .note-tape{
+    position:absolute;
+    top:-11px; left:20px;
+    width:60px; height:20px;
+    background:linear-gradient(180deg, var(--tape), #e8d59b);
+    opacity:0.85;
+    transform:rotate(-4deg);
+    box-shadow:0 1px 2px rgba(0,0,0,0.18);
+    z-index:2;
+  }
+  .note-tape.right{
+    left:auto; right:20px;
+    transform:rotate(5deg);
+    background:linear-gradient(180deg, var(--tape-mint), #b7d9cc);
+  }
+
+  .manuscript{
+    position:relative;
+    background:
+      linear-gradient(0deg, rgba(120,90,50,0.16) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(120,90,50,0.16) 1px, transparent 1px),
+      #fffaf0;
+    background-size:24px 26px;
+    border:1px solid rgba(120,90,50,0.35);
+    box-shadow:0 8px 16px rgba(30,20,10,0.22);
+    padding:18px 10px 16px;
+    border-radius:2px;
+  }
+
+  .manuscript .diary-text{
+    font-family:'Nanum Pen Script', cursive;
+    font-size:19px;
+    line-height:26px;
+    color:#3f2f1c;
+    letter-spacing:1px;
+    word-break:keep-all;
+  }
+
+  .manuscript .diary-text .indent{
+    display:inline-block;
+    width:1.1em;
+  }
+
+  .stamp-corner{
+    position:absolute;
+    bottom:-10px; right:-8px;
+    font-family:'Special Elite', monospace;
+    font-size:10px;
+    color:var(--stamp-red);
+    border:2px solid var(--stamp-red);
+    border-radius:50%;
+    width:52px; height:52px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    line-height:1.15;
+    transform:rotate(-14deg);
+    opacity:0.75;
+    background:rgba(255,250,240,0.4);
+  }
+
+  /* ---------- footer stickers ---------- */
+  .stickers{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    margin-top:22px;
+    font-size:20px;
+  }
+  .stickers span{
+    display:inline-block;
+    filter:drop-shadow(1px 2px 1px rgba(0,0,0,0.25));
+  }
+  .stickers span:nth-child(1){ transform:rotate(-10deg); }
+  .stickers span:nth-child(2){ transform:rotate(8deg); }
+  .stickers span:nth-child(3){ transform:rotate(-4deg); }
+  .stickers span:nth-child(4){ transform:rotate(12deg); }
+  .stickers span:nth-child(5){ transform:rotate(-8deg); }
+
+  .page-footer-note{
+    text-align:center;
+    margin-top:10px;
+    font-family:'Special Elite', monospace;
+    font-size:10.5px;
+    color:var(--ink-soft);
+    opacity:0.75;
+  }
+
+  @media (min-width:480px){
+    body{ padding:56px 20px 80px; }
+    .diary-page{ padding:26px 24px 32px; }
+  }
+
+  @media (prefers-color-scheme: dark){
+    body{ background-color:var(--kraft-3); }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="sian-tag">시안 3 · 크라프트 스크랩북</div>
+
+  <div class="diary-page">
+    <span class="page-tape tl"></span>
+    <span class="page-tape tr"></span>
+
+    <div class="header-row">
+      <div class="date-badge">2026. 7. 23. 목요일</div>
+      <div class="weather">☀️</div>
+      <div class="dday-badge">태어난지<b>D+128</b></div>
+    </div>
+
+    <div class="title-wrap">
+      <span class="title-tape"></span>
+      <span class="title">오늘은 첫 이유식</span>
+      <div class="title-underline"></div>
+    </div>
+
+    <div class="collage">
+      <div class="photo">
+        <span class="tape-bit"></span>
+        <div class="frame">👶</div>
+        <div class="cap">궁금한 표정</div>
+      </div>
+      <div class="photo pinned">
+        <span class="tape-bit"></span>
+        <div class="frame">🥣</div>
+        <div class="cap">쌀미음 완성</div>
+      </div>
+      <div class="photo">
+        <span class="tape-bit"></span>
+        <div class="frame">🍼</div>
+        <div class="cap">한 입만 냠</div>
+      </div>
+      <div class="photo">
+        <span class="tape-bit"></span>
+        <div class="frame">🧸</div>
+        <div class="cap">곰돌이랑 대기</div>
+      </div>
+      <div class="photo">
+        <span class="tape-bit"></span>
+        <div class="frame">🌙</div>
+        <div class="cap">배부르니 쿨쿨</div>
+      </div>
+      <div class="photo">
+        <span class="tape-bit"></span>
+        <div class="frame">🐤</div>
+        <div class="cap">짹짹 굿모닝</div>
+      </div>
+    </div>
+
+    <div class="note-wrap">
+      <span class="note-tape"></span>
+      <span class="note-tape right"></span>
+      <div class="manuscript">
+        <div class="diary-text">
+          <span class="indent"></span>오늘 드디어 첫 이유식을 먹었다. 쌀미음 한 숟가락에
+          세상 오만상을 다 짓더니, 이내 오물오물 잘도 받아먹었다.<br>
+          다 먹고는 그릇까지 핥으려 해서 온 가족이 빵 터졌다.<br>
+          우리 아가, 밥 잘 먹어줘서 고마워. 무럭무럭 자라자 🤍
+        </div>
+        <div class="stamp-corner">FIRST<br>MEAL<br>D+128</div>
+      </div>
+    </div>
+
+    <div class="stickers">
+      <span>🌿</span><span>📎</span><span>🔖</span><span>🧷</span><span>✂️</span>
+    </div>
+    <div class="page-footer-note">— scrapbook diary · page 128 —</div>
+  </div>
+
+</div>
+</body>
+</html>
